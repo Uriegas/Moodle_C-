@@ -1,4 +1,4 @@
-#Moodle Replica
+# Moodle Replica
 
 This is a simple moodle replica written in C++ using the ANSI C library and other self created functions.
 
@@ -32,5 +32,5 @@ These is going to create an executable in the build directory.
 This has only been proven in Ubuntu 18.04.4.
 Please do a little research on installing CMake projects before installing in another operating system.
 
-##NOTE
+## NOTE
 testing.sh is file in the main directory that is going to build from source and open the executable automatically. It only works on Linux.
