@@ -24,9 +24,9 @@ Build from source using cmake.
 It is required cmake, make and gnu gcc.
 
 Install as follows:
-**mkdir build**
-**cd build**
-**cmake ..**
+1. **mkdir build**
+2. **cd build**
+3. **cmake ..**
 
 These is going to create an executable in the build directory.
 This has only been proven in Ubuntu 18.04.4.
