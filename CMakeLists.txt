@@ -9,9 +9,10 @@ project(moodle)
 
 ##Debuging Symbols and Optimization Activated
 set(CMAKE_BUILD_TYPE RelWithDebInfo)
- 
+add_subdirectory(include)
 ##Uncomment for Realese Mode and Comment above macro
 ##set(CMAKE_BUILD_TYPE Release)
 
 #building project
 add_executable(moodle src/main.cpp)
+target_link_libraries(moodle PRIVATE input)
