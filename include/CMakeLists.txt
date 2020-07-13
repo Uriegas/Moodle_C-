@@ -1,5 +1,5 @@
 add_library(
-	input STATIC
+	input SHARED
 	input.h
 	${PROJECT_SOURCE_DIR}/src/input.cpp
 	)
