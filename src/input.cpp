@@ -1,6 +1,12 @@
 #include "../include/input.h"
 #include <math.h>
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Input Example
+//pow({x}, 2) + (pow(sin({y}), 2));
+
+//Output Example
+//x2!2y^!+
 
 //****************LOCAL FUNCTIONS********************
 
@@ -32,12 +38,6 @@ void string_variable_analizer(const std::string base, std::vector <std::string> 
     }
 }
 
-//Input Example
-//pow({x}, 2) + (pow(sin({y}), 2));
-
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//Output Example
-//x2!2y^!+
 void string_sintax_processor(std::string formula){
     std::stack <char> variables;
 
@@ -47,7 +47,6 @@ void string_sintax_processor(std::string formula){
 
     }
 }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // Function to find precedence of  
 // operators. 
@@ -184,6 +183,8 @@ int formula_to_postfix_notation(const std::string tokens){
     return values.top();
 } 
 
+//Give it a base string, a search and replace strings, 
+//and it changes the result string
 void ReplaceStringInPlace(std::string& subject, const std::string& search,
                           const std::string& replace) {
     size_t pos = 0;
@@ -193,6 +194,9 @@ void ReplaceStringInPlace(std::string& subject, const std::string& search,
     }
 }
 
+//Finds variables aka "comodines" (ej. {var})
+//in a string and replace them with
+//the second element of the variable (ej. 'v')
 void replace_variables_in_string(std::string &formula){
 	int flag = 0;
     std::string buffer;
@@ -228,11 +232,14 @@ void Input::read_question(){
     question_number++;
 }
 
+//Prints the question string to the screen
 void Input::print_question(){
 	std::cout << "You are in question no. " << question_number << std::endl;
 	std::cout << question << std::endl;
 }
 
+//Reads from keyboard and saves to string the formula
+//also convert it to postfix notation for future use
 int Input::read_formula(){
     std::getline(std::cin, formula);
 
@@ -260,6 +267,7 @@ int Input::read_formula(){
     }
 }
 
+//Prints the formula string in the class Input
 void Input::print_formula(){
 	std::cout << formula << std::endl;
 }

@@ -2,6 +2,10 @@
 #include "../include/menu.h"
 using namespace std;
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Author: Jesus Eduardo Uriegas Ibarra
+//Moodle Replica in C++
+
 int main() {
     Menu menu;
     Input teacher;
@@ -12,11 +16,4 @@ int main() {
     teacher.read_formula();
     teacher.print_formula();
     return 0;
-}/*
-int main(){
-    string hola = {"hola como estan"};
-    cout << hola << endl;
-    Input input;
-    input.deletespace(hola, 4);
-    cout << hola << endl;
-}*/
+}
