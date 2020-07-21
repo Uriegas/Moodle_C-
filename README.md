@@ -19,7 +19,7 @@ The values a, b, c have a range which is going to be set by the user and an erro
 
 Then the range could be between 1 and 100; which tells the program that the possible values of a, b and c are going to be in this range, and by the formula this is going to evaluate to the result of x that the student should answer, but if he or she fails and the answer is between the error tolerance then the answer would be correct.
 
-## BUILDING.
+## BUILDING
 Build from source using cmake.
 It is required cmake, make and gnu gcc.
 
@@ -31,6 +31,11 @@ Install as follows:
 These is going to create an executable in the build directory.
 This has only been proven in Ubuntu 18.04.4.
 Please do a little research on installing CMake projects before installing in another operating system.
+
+## TODO
+1. Implement the formula input function on the Input class
+2. Implement the 3 question functions
+3. Implement the examen generator
 
 ## NOTE
 testing.sh is file in the main directory that is going to build from source and open the executable automatically. It only works on Linux.
