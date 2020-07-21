@@ -9,6 +9,7 @@ class Pregunta_Simple {
     public:
         Pregunta_Simple(){};
         //Add functions interfaces
+        void create_simple_question();
     private:
 };
 #endif //PREGUNTA_SIMPLE_H

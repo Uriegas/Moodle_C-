@@ -8,5 +8,6 @@
 class Pregunta_Multiple {
     public:
         Pregunta_Multiple(){};
+        void create_multiple_question();
 };
 #endif //PREGUNTA_MULTIPLE_H
