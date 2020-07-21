@@ -1,121 +1,53 @@
 #include "../include/input.h"
-/*
-void Input::set_question( int question ){
-	question_number = question;
-	}
-*/
-void Input::deletespace(std::string &string, int space){
-	for(int i=space; i <= string.length(); i++){
-		string[i] = string[i+1];
-	}
-	string.resize(string.length()-1);
+#include <math.h>
+
+
+//****************LOCAL FUNCTIONS********************
+
+//Function that delete spaces from a string ej. "e sto y asi " -> "estoyasi"
+void deletespace(std::string &str){
+    str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
 }
 
-void Input::read_question(){
+//Finds variables (sorrounded by {}) in a string and save them in a stack
+void string_variable_analizer(const std::string base, std::vector <std::string> &stack){
 	int flag = 0;
-	int variables_length = 0;
+    std::string buffer;
 
-	while(std::cin.peek() != '\n'){//Read user input and save in question
-		std::getline(std::cin, question);
-	}
-
-	for( int i = 0; i < question.length(); i++){
-		if(question[i] == '{'){
+	for( int i = 0; i < base.length(); i++){
+		if(base[i] == '{'){
 			flag = 1;
-			variables_quantity++;
 			continue;
 		}
-		if(flag == 1 && question[i] != '}'){
-			if(variables_length >= 9){
-				continue;
-			}
-			variables_names[variables_quantity][variables_length] = question[i];
-			variables_length++;
-			continue;
+		if(flag == 1 && base[i] != '{'){
+            buffer += base[i];
 		}
-		if(question[i] == '}'){
-			variables_names[variables_quantity][variables_length] = '\n';
-		}
-		flag = 0;
-		variables_length = 0;
-	}
+
+        if(base[i] == '}'){
+            buffer.pop_back();
+            stack.push_back(buffer);
+            flag = 0;
+            buffer.clear();
+        }
+    }
 }
 
-void Input::print_question(){
-	std::cout << "You are in question no. " << question_number << std::endl;
-	std::cout << question << std::endl;
-	std::cout << "There are " << variables_quantity+1 << " variables." << std::endl;
+//Input Example
+//pow({x}, 2) + (pow(sin({y}), 2));
 
-	for(int i = 1; i <= variables_quantity+1; i++){//Print variables
-		std::cout << "Variable no. " << i << " is ";
-		for(int j = 0; variables_names[i-1][j] != '\n'; j++){
-			std::cout << variables_names[i-1][j];
-		}
-		std::cout << std::endl;
-	}
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Output Example
+//x2!2y^!+
+void string_sintax_processor(std::string formula){
+    std::stack <char> variables;
+
+    int replace_position = 0; 
+    for(int i; i< formula.length(); i++){
+        replace_position = formula.find('{');
+
+    }
 }
-/*
-void Input::read_formula(){
-//	int flag = 0;
-//	int variables_length = 0;
-	std::vector<std::string> formulas;
-	char variables[10][10];
-	std::string* formu = new std::string;
-
-	while(std::cin.peek() != '\n'){//Read user input and save in formula
-		std::getline(std::cin, formula);
-	}
-
-	if(formula[0] == '='){
-		deletespace(formula, 0);
-	}
-
-	for(int i = 0; i< formula.length(); i++){
-		if(formula[i] == ' '){
-			deletespace(formula, i);
-		}
-	}
-
-	for(int i = 0; i < formula.length(); i++){
-		if(formula[i] == '('){
-			;
-		}
-		formu[0] = formula[i];
-		formulas.push_back(formula);
-
-	}
-
-	if(formula[0] == '('){
-
-	}
-	else if(formula[0] == '{'){
-
-	}
-	else{
-	}
-
-	for(int i = 0; i< formula.length(); i++){
-		if(formula[i] == '('){
-			flag = 1;
-			variables_quantity++;
-			continue;
-		}
-		if(flag == 1 && formula[i] != '}'){
-			if(variables_length >= 9){
-				continue;
-			}
-			variables_names[variables_quantity][variables_length] = question[i];
-			variables_length++;
-			continue;
-		}
-		if(question[i] == '}'){
-			variables_names[variables_quantity][variables_length] = '\n';
-		}
-		flag = 0;
-		variables_length = 0;
-	}
-}*/
-
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // Function to find precedence of  
 // operators. 
@@ -128,29 +60,33 @@ int precedence(char op){
 } 
   
 // Function to perform arithmetic operations. 
-int applyOp(int a, int b, char op){ 
+float applyOp(int a, int b, char op){ 
     switch(op){ 
         case '+': return a + b; 
         case '-': return a - b; 
         case '*': return a * b; 
-        case '/': return a / b; 
+        case '/': return a / b;//Added math functions, not implemented yet
+        case '!': return pow(a, b);
+        case '@': return abs(a);
+        case '#': return log(a);
+        case '$': return rand();
+        case '%': return sqrt(a);
+        case '^': return sin(a);
+        case '&': return cos(a);
+        case '~': return tan(a);
     } 
 } 
-  
 
 // Function that returns value of 
 // expression after evaluation. 
-int read_formula(std::string tokens){ 
+int formula_to_postfix_notation(const std::string tokens){ 
     int i; 
-      
-    // stack to store integer values. 
-    std::stack <int> values; 
-      
+    // stack to store float values. 
+    std::stack <float> values; 
     // stack to store operators. 
     std::stack <char> ops; 
-      
+
     for(i = 0; i < tokens.length(); i++){ 
-          
         // Current token is a whitespace, 
         // skip it. 
         if(tokens[i] == ' ') 
@@ -196,7 +132,7 @@ int read_formula(std::string tokens){
                   
                 values.push(applyOp(val1, val2, op)); 
             } 
-              
+
             // pop opening brace. 
             if(!ops.empty()) 
                ops.pop(); 
@@ -247,3 +183,83 @@ int read_formula(std::string tokens){
     // Top of 'values' contains result, return it. 
     return values.top();
 } 
+
+void ReplaceStringInPlace(std::string& subject, const std::string& search,
+                          const std::string& replace) {
+    size_t pos = 0;
+    while ((pos = subject.find(search, pos)) != std::string::npos) {
+         subject.replace(pos, search.length(), replace);
+         pos += replace.length();
+    }
+}
+
+void replace_variables_in_string(std::string &formula){
+	int flag = 0;
+    std::string buffer;
+//{Hola} + {todo}
+	for( int i = 0; i < formula.length(); i++){
+		if(formula[i] == '{'){
+			flag = i+1;
+            buffer += formula[i];
+			continue;
+		}
+		if(flag != 0 && formula[i] != '{'){
+            buffer += formula[i];
+		}
+
+        if(formula[i] == '}'){
+            std::string buffer2;
+            buffer2+=buffer[1];
+            ReplaceStringInPlace(formula, buffer, buffer2);
+            flag = 0;
+            buffer.clear();
+            buffer2.clear();
+            i = 1;
+        }
+    }
+}
+
+//****************CLASS FUNCTIONS********************
+
+//Read question from keyboard to a string
+void Input::read_question(){
+    std::getline(std::cin, question);
+    string_variable_analizer(question, variable_names);
+    question_number++;
+}
+
+void Input::print_question(){
+	std::cout << "You are in question no. " << question_number << std::endl;
+	std::cout << question << std::endl;
+}
+
+int Input::read_formula(){
+    std::getline(std::cin, formula);
+
+    std::vector <std::string> variables;
+    std::string buffer;
+    int counter = 0;
+
+    string_variable_analizer(formula, variables);
+    for(int j=0; j<variable_names.size(); j++){
+        for(int i=0; i<variables.size(); i++){
+            if(variables[i] == variable_names[j])
+                counter++;
+        }
+    }
+
+    if(counter == variable_names.size() && counter == variables.size()){
+        std::cout << "Variables were well written" << std::endl;
+        //Here the parser and postfix converter
+        deletespace(formula);
+        replace_variables_in_string(formula);
+    }
+    else{
+        std::cout<< "Error: Ingreso mal las varaibles" << std::endl;
+        return 0;
+    }
+}
+
+void Input::print_formula(){
+	std::cout << formula << std::endl;
+}
