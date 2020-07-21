@@ -8,20 +8,14 @@
 class Input{
 	public:
 		Input()
-			:question_number(0) {
-//				for(int i = 0; i < 10; i++){//Initialize ultimate characters to '\n'
-//					variables_names[i][9] = '\n';
-//				}
-			};
-//		void set_question( int question_number );
-//		void set_answer();
+			:question_number(0) {};
 		void read_question();
 		void read_answer();
 		void print_question();
-		void print_answer(); //Not implemented yet
+		void print_answer();
 		int read_formula();
 		void print_formula();
-		std::ofstream generate_questions();
+		std::ofstream generate_questions();//Not implemented
 
 	private:
 		std::string question; //String where the question is saved

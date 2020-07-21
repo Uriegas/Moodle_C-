@@ -15,4 +15,4 @@ add_subdirectory(include)
 
 #building project
 add_executable(moodle src/main.cpp)
-target_link_libraries(moodle PRIVATE input)
+target_link_libraries(moodle PRIVATE moodle_lib)
