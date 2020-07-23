@@ -229,12 +229,12 @@ void replace_variables_in_string(std::string &formula){
 void Input::read_question(){
     std::getline(std::cin, question);
     string_variable_analizer(question, variable_names);
-    question_number++;
+//  question_number++;
 }
 
 //Prints the question string to the screen
 void Input::print_question(){
-	std::cout << "You are in question no. " << question_number << std::endl;
+//	std::cout << "You are in question no. " << question_number << std::endl;
 	std::cout << question << std::endl;
 }
 

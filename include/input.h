@@ -7,8 +7,7 @@
 
 class Input{
 	public:
-		Input()
-			:question_number(0) {};
+		Input(){};
 		void read_question();
 		void read_answer();
 		void print_question();
@@ -21,7 +20,7 @@ class Input{
 		std::string question; //String where the question is saved
 		std::string answer; //String where the answer is saved
 		std::string formula;//String where the formula is saved
-		int question_number = 0;
+//		int question_number= 0;
 		std::vector <std::string> variable_names;
 };
 
