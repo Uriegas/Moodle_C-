@@ -5,6 +5,7 @@
 #include <vector>
 #include <bits/stdc++.h> 
 
+//Input Interface
 class Input{
 	public:
 		Input(){};
@@ -14,6 +15,7 @@ class Input{
 		void print_answer();
 		int read_formula();
 		void print_formula();
+		void set_tolerance(); //Not implemented 
 		std::ofstream generate_questions();//Not implemented
 
 	private:
