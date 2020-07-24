@@ -38,5 +38,7 @@ ret:std::cout << "Desea agregar retroalimentacion general" << "\n";
 
     //Read answer input
     std::cout << "Ingrese la formula de la respuesta correcta" << "\n";
-    simple_input.read_formula();
+    //read_formula should return a vector<string>
+    simple_input.read_formula();//Suppose that it returns a postfix notation
+//    answer.tolerance
 }
