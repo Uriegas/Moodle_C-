@@ -15,10 +15,11 @@ void deletespace(std::string &str){
     str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
 }
 
-//Finds variables (sorrounded by {}) in a string and save them in a stack
-void string_variable_analizer(const std::string base, std::vector <std::string> &stack){
+//Finds variables (sorrounded by {}) in a string and returns them in a vector
+std::vector<std::string> Input::string_variable_analizer(const std::string base) {
 	int flag = 0;
     std::string buffer;
+    std::vector<std::string> stack;
 
 	for( int i = 0; i < base.length(); i++){
 		if(base[i] == '{'){
@@ -36,8 +37,10 @@ void string_variable_analizer(const std::string base, std::vector <std::string> 
             buffer.clear();
         }
     }
+    return stack;
 }
 
+//ERROR:Delete this
 void string_sintax_processor(std::string formula){
     std::stack <char> variables;
 
@@ -183,10 +186,9 @@ int formula_to_postfix_notation(const std::string tokens){
     return values.top();
 } 
 
-//Give it a base string, a search and replace strings, 
+//Give it a base string (subject), and search and replace strings, 
 //and it changes the result string
-void ReplaceStringInPlace(std::string& subject, const std::string& search,
-                          const std::string& replace) {
+void ReplaceStringInPlace(std::string& subject, const std::string& search, const std::string& replace) {
     size_t pos = 0;
     while ((pos = subject.find(search, pos)) != std::string::npos) {
          subject.replace(pos, search.length(), replace);
@@ -222,13 +224,16 @@ void replace_variables_in_string(std::string &formula){
         }
     }
 }
-
+std::vector<std::string> formula;
 //****************CLASS FUNCTIONS********************
 
 //Read question from keyboard to a string
-void Input::read_question(){
+std::string Input::read_question(){
+    std::string question;
     std::getline(std::cin, question);
-    string_variable_analizer(question, variable_names);
+    return question;
+//    if(ANALIZE == 1)
+//        variable_names = string_variable_analizer(question);
 //  question_number++;
 }
 
@@ -247,7 +252,7 @@ int Input::read_formula(){
     std::string buffer;
     int counter = 0;
 
-    string_variable_analizer(formula, variables);
+    variables = string_variable_analizer(formula);
     for(int j=0; j<variable_names.size(); j++){
         for(int i=0; i<variables.size(); i++){
             if(variables[i] == variable_names[j])

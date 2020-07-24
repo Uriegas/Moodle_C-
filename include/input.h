@@ -5,11 +5,10 @@
 #include <vector>
 #include <bits/stdc++.h> 
 
-//Input Interface
 class Input{
 	public:
 		Input(){};
-		void read_question();
+		std::string read_question();
 		void read_answer();
 		void print_question();
 		void print_answer();
@@ -17,6 +16,7 @@ class Input{
 		void print_formula();
 		void set_tolerance(); //Not implemented 
 		std::ofstream generate_questions();//Not implemented
+		std::vector<std::string> string_variable_analizer(const std::string base);
 
 	private:
 		std::string question; //String where the question is saved

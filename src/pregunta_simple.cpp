@@ -4,6 +4,17 @@
 
 void Pregunta_Simple::create_simple_question(){
     Input simple_input;
-    std::cout << "Ingrese el nombre de la pregunta" << std::endl;
-    simple_input.read_question();
+    Question question; 
+    Answer answer;
+    Units units;
+    Multiple_Attempts multiple_attempts;
+    Landmarks_Group landmarks;
+    std::cout << "Ingrese el nombre de la pregunta" << "\n";
+    std::cin.ignore();
+    question.question_name = simple_input.read_question();
+    std::cout << "Ingrese el texto de la pregunta" << "\n";
+    question.question_text = simple_input.read_question();
+    std::vector<std::string> variables;
+    variables = simple_input.string_variable_analizer(question.question_text);
+    question.variables = variables;
 }

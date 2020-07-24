@@ -53,7 +53,6 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
             << "\n" << "Que tipo de pregunta desea realizar?" << "\n"
             << "(Ingrese el numero)" << std::endl;
     std::cin >> selected_question;
-    
     if (selected_question > 3 || selected_question < 1){
         std::cout << "ERROR: Ingrese un numero de pregunta valido" <<std::endl;
         goto que;
