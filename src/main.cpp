@@ -47,6 +47,7 @@ int main() {
             break;
         }
     }
+    cout<< "Pregunta No. " << " guardada correctamente" << endl; //Ougth to implement number of question
     //After creating a question save it to a file.
     //Create class File, with methods for converting a class into a File in a database (.txt)
     menu.show_menu(); //Call again to continue add/modify/exit cycle

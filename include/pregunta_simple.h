@@ -11,7 +11,14 @@ class Pregunta_Simple {
         Pregunta_Simple(){};
         //Add functions interfaces
         void create_simple_question();
-    private:
+};
+    struct Question {
+        std::string question_name;
+        std::string question_text;
+        std::vector <std::string> variables;
+        int default_score;
+        std::string general_feedback;
+    };
     struct Answer {
         public:
             std::vector <std::string> answer_formula;
@@ -30,13 +37,5 @@ class Pregunta_Simple {
     };
     struct Landmarks_Group{
         std::vector<std::string> landmarks;
-    };
-};
-    struct Question {
-        std::string question_name;
-        std::string question_text;
-        std::vector <std::string> variables;
-        int default_score;
-        std::string general_feedback;
     };
 #endif //PREGUNTA_SIMPLE_H
