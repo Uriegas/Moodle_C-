@@ -223,16 +223,13 @@ void replace_variables_in_string(std::string &formula){
         }
     }
 }
-//****************CLASS FUNCTIONS********************
 
+//****************CLASS FUNCTIONS********************
 //Read question from keyboard to a string
 std::string Input::read_question(){
     std::string question;
     std::getline(std::cin, question);
     return question;
-//    if(ANALIZE == 1)
-//        variable_names = string_variable_analizer(question);
-//  question_number++;
 }
 
 //Prints the question string to the screen
@@ -289,10 +286,77 @@ void Input::set_tolerance(Answer& answer){ //Not implemented
 
 //Simple function that returns
 //the current date and time
-std::string current_date(){
+std::string Input::current_date(){
    // current date/time based on current system
     time_t now = time(0);
    // convert now to string form
     std::string dt = ctime(&now);
     return dt;
+}
+
+//Brief interface that returns what the user entered
+std::string Input::feedback_function(const std::string& feedback_type){
+    char* retro = new char;
+    std::string feedback_return;
+ret:std::cout << "Desea agregar " << feedback_type << "\n"
+            << "y = si" << "\n"
+            << "n = no" << "\n";
+    std::cin >> *retro;
+    if((*retro) == 'y'){
+        std::cout << "Ingrese la(s) " << feedback_type << "\n";
+        std::cin.ignore();
+        std::getline(std::cin, feedback_return);
+    }
+    else if((*retro) == 'n'){
+        feedback_return = "\n";
+    }
+    else{
+        std::cout << "Ingrese un valor valido" << "\n";
+        goto ret;
+    }
+    delete retro;
+    return feedback_return;
+}
+
+// function to split string into substrings on the 
+// basis of delimiter and return the substrings 
+// after split in a vector of strings
+std::vector<std::string> Input::split_string(std::string str, char dl) 
+{ 
+    std::string word = ""; 
+  
+    // to count the number of split strings 
+    int num = 0; 
+  
+    // adding delimiter character at the end 
+    // of 'str' 
+    str = str + dl; 
+  
+    // length of 'str' 
+    int l = str.size(); 
+  
+    // traversing 'str' from left to right 
+    std::vector<std::string> substr_list; 
+    for (int i = 0; i < l; i++) { 
+  
+        // if str[i] is not equal to the delimiter 
+        // character then accumulate it to 'word' 
+        if (str[i] != dl) 
+            word = word + str[i]; 
+  
+        else { 
+  
+            // if 'word' is not an empty string, 
+            // then add this 'word' to the array 
+            // 'substr_list[]' 
+            if ((int)word.size() != 0) 
+                substr_list.push_back(word); 
+  
+            // reset 'word' 
+            word = ""; 
+        } 
+    } 
+  
+    // return the splitted strings 
+    return substr_list; 
 }

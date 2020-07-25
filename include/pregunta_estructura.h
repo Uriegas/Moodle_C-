@@ -36,7 +36,7 @@ struct Landmarks_Group{
     std::vector<std::string> landmarks;
 };
 struct Time {
-    std::string created;
-    std::string last_modified;
+    std::string created = "\n";
+    std::string last_modified = "\n";
 };
 #endif

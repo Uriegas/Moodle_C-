@@ -2,29 +2,7 @@
 #include "../include/input.h"
 #include <iostream>
 
-std::string feedback_function(const std::string& feedback_type){
-    char* retro = new char;
-    std::string feedback_return;
-ret:std::cout << "Desea agregar " << feedback_type << "\n"
-            << "y = si" << "\n"
-            << "n = no" << "\n";
-    std::cin >> *retro;
-    if((*retro) == 'y'){
-        std::cout << "Ingrese la " << feedback_type << "\n";
-        std::cin.ignore();
-        std::getline(std::cin, feedback_return);
-    }
-    else if((*retro) == 'n'){
-        feedback_return = "\n";
-    }
-    else{
-        std::cout << "Ingrese un valor valido" << "\n";
-        goto ret;
-    }
-    delete retro;
-    return feedback_return;
-}
-
+//****************CLASS FUNCTIONS********************
 void Pregunta_Simple::create_simple_question(){
     //Instatiate classes about the question elemnts
     Input simple_input;
@@ -44,7 +22,7 @@ void Pregunta_Simple::create_simple_question(){
     question.variables = simple_input.string_variable_analizer(question.question_text);
     std::cout << "Ingrese la puntuacion por defectuo de la pregunta" << "\n";
     std::cin >> question.default_score;
-    question.general_feedback = feedback_function("retroalimentacion general");
+    question.general_feedback = simple_input.feedback_function("retroalimentacion general");
 
     //<<<<<<<<<< Answer Section >>>>>>>>>>>>>>>
     //Read answer input
@@ -59,12 +37,21 @@ dec:std::cout << "Decimales o cifras significativas?" << "\n";
             << ">1." << "\t" << "Cifras Significativas" << std::endl;
     std::cin.ignore();
     std::cin >> answer.decimal_or_significative;
-    answer.specific_feedback = feedback_function("retroalimentacion especifica");
+    answer.specific_feedback = simple_input.feedback_function("retroalimentacion especifica");
 
     //<<<<<<<<<< Unit Section >>>>>>>>>>>>>>>
     //<<<<<<<<<< Multiple Attempts Section >>>>>>>>>>>>>>>
     //<<<<<<<<<< Landmark Section >>>>>>>>>>>>>>>
+    landmarks.landmarks[0] = simple_input.feedback_function("marcas");
+    landmarks.landmarks = simple_input.split_string(landmarks.landmarks[0], ' ');
+
     //<<<<<<<<<< Created/Last Change Section >>>>>>>>>>>>>>>
-    time.created = simple_input.current_date();
-    std::cout<< "Question created " << time.created << "\n";
+    if(time.created != "\n")
+        time.last_modified = simple_input.current_date();
+    else{
+        time.created = simple_input.current_date();
+        time.last_modified = simple_input.current_date();
+    }
+    std::cout<< "Pregunta creada en " << time.created << "\n";
+    std::cout<< "Pregunta modifica en " << time.last_modified << "\n";
 }
