@@ -1,5 +1,4 @@
 #include "../include/input.h"
-#include <math.h>
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Input Example
@@ -287,3 +286,13 @@ void Input::set_tolerance(Answer& answer){ //Not implemented
             << "3." << "\t" << "Geometrica" << std::endl;
     std::cin >> answer.tolerance_type;
 } 
+
+//Simple function that returns
+//the current date and time
+std::string current_date(){
+   // current date/time based on current system
+    time_t now = time(0);
+   // convert now to string form
+    std::string dt = ctime(&now);
+    return dt;
+}

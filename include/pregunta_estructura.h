@@ -4,6 +4,10 @@
 #include <vector>
 #include <queue> 
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Functions to modify the elements of this structures are defined in input.cpp file.
+//And their implementation is on every type of question .cpp files
+
 struct Question {
     std::string question_name;
     std::string question_text;
@@ -30,5 +34,9 @@ struct Multiple_Attempts {
 };
 struct Landmarks_Group{
     std::vector<std::string> landmarks;
+};
+struct Time {
+    std::string created;
+    std::string last_modified;
 };
 #endif

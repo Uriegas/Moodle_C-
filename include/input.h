@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <bits/stdc++.h> 
+#include <math.h>
+#include <ctime>
 
 class Input{
 	public:
@@ -19,6 +21,7 @@ class Input{
 		void set_tolerance(Answer& answer); //Not implemented 
 		std::string feedback_function(const std::string& feedback_type);
 		std::vector<std::string> string_variable_analizer(const std::string base);
+		std::string current_date();
 
 	private:
 		std::string question; //String where the question is saved
