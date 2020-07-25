@@ -224,7 +224,6 @@ void replace_variables_in_string(std::string &formula){
         }
     }
 }
-std::vector<std::string> formula;
 //****************CLASS FUNCTIONS********************
 
 //Read question from keyboard to a string

@@ -17,6 +17,7 @@ class Input{
 		int read_formula();
 		void print_formula();
 		void set_tolerance(Answer& answer); //Not implemented 
+		std::string feedback_function(const std::string& feedback_type);
 		std::vector<std::string> string_variable_analizer(const std::string base);
 
 	private:
