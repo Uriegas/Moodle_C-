@@ -276,3 +276,15 @@ int Input::read_formula(){
 void Input::print_formula(){
 	std::cout << formula << std::endl;
 }
+//Accepts the Answer strcuture
+//Modifies tolerance parameters
+void Input::set_tolerance(Answer& answer){ //Not implemented
+    std::cout << "Ingrese la tolerancia de la respuesta" << "\n";
+    std::cin >> answer.tolerance;
+
+    std::cout << "Ingrese el tipo de tolerancia" << "\n"
+            << "1." << "\t" << "Relativa" << "\n"
+            << "2." << "\t" << "Nominal" << "\n"
+            << "3." << "\t" << "Geometrica" << std::endl;
+    std::cin >> answer.tolerance_type;
+} 

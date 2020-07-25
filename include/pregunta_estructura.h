@@ -17,6 +17,7 @@ struct Answer {
         float tolerance;
         int tolerance_type;
         int number_of_decimals; //Should implement significative digits
+        bool decimal_or_significative;
         std::string specific_feedback;
 };
 struct Units {
