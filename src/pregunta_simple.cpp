@@ -40,7 +40,34 @@ dec:std::cout << "Decimales o cifras significativas?" << "\n";
     answer.specific_feedback = simple_input.feedback_function("retroalimentacion especifica");
 
     //<<<<<<<<<< Unit Section >>>>>>>>>>>>>>>
+    int select;
+uni:std::cout << "Desea calificar unidades?" << "\n";
+    std::cout << "0." << "\t" << "No, no emplear unidades" << "\n"
+            << "1." << "\t" << "Si, OPCIONALES sin calicar" << "\n"
+            << "2." << "\t" << "Si, las unidades se calificaran" << std::endl;
+    std::cin.ignore();
+    std::cin >> select;
+    if(select == 0){
+        units.unit = "\n";
+        units.unit_penalization = 0;
+    }
+    else if(select == 1 || select == 2){
+        std::cout << "Ingrese la unidad" << "\n";
+        std::getline(std::cin, units.unit);
+        if(select == 2){
+            std::cout << "Ingrese la penalizacion" << "\n"
+                        << "(Penalizacion sobre la respuesta)" << std::endl;
+            std::cin >> units.unit_penalization;
+        }
+    }
+    else{
+        std::cout << "ERROR: Ingrese una opcion valida" << "\n";
+        goto uni;
+    }
+
     //<<<<<<<<<< Multiple Attempts Section >>>>>>>>>>>>>>>
+    //This section is not included in the simple question format
+
     //<<<<<<<<<< Landmark Section >>>>>>>>>>>>>>>
     landmarks.landmarks[0] = simple_input.feedback_function("marcas");
     landmarks.landmarks = simple_input.split_string(landmarks.landmarks[0], ' ');

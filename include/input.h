@@ -22,7 +22,6 @@ class Input{
 		std::string feedback_function(const std::string& feedback_type);
 		std::vector<std::string> string_variable_analizer(const std::string base);
 		std::string current_date();
-		std::string feedback_function(const std::string& feedback_type);
 		std::vector<std::string> split_string(std::string str, char dl);
 
 	private:
