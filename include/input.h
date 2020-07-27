@@ -16,7 +16,7 @@ class Input{
 		void print_question();
 		std::ofstream generate_questions();//Not implemented
 		void print_answer();
-		int read_formula();
+		std::vector<std::string> read_formula();
 		void print_formula();
 		void set_tolerance(Answer& answer); //Not implemented 
 		std::string feedback_function(const std::string& feedback_type);

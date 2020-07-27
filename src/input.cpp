@@ -271,7 +271,7 @@ void Input::print_question(){
 
 //Reads from keyboard and saves to string the formula
 //also convert it to postfix notation for future use
-int Input::read_formula(){
+std::vector<std::string> Input::read_formula(){
     std::getline(std::cin, formula);
     std::vector <std::string> variables;
     std::string buffer;
@@ -292,7 +292,7 @@ int Input::read_formula(){
     }
     else{
         std::cout<< "Error: Ingreso mal las varaibles" << std::endl;
-        return 0;
+//        return 0;
     }
 }
 

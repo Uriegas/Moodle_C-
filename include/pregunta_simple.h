@@ -10,6 +10,9 @@
 class Pregunta_Simple {
     public:
         Pregunta_Simple(){};
+        ~Pregunta_Simple(){
+            std::cout << "Destroying this simple question" << "/n";
+        }
         //Add functions interfaces
         void create_simple_question();
 };
