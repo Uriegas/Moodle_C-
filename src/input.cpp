@@ -25,9 +25,8 @@ std::vector<std::string> Input::string_variable_analizer(const std::string base)
 			flag = 1;
 			continue;
 		}
-		if(flag == 1 && base[i] != '{'){
+		if(flag == 1 && base[i] != '{')
             buffer += base[i];
-		}
 
         if(base[i] == '}'){
             buffer.pop_back();
@@ -39,19 +38,9 @@ std::vector<std::string> Input::string_variable_analizer(const std::string base)
     return stack;
 }
 
-//ERROR:Delete this
-void string_sintax_processor(std::string formula){
-    std::stack <char> variables;
-
-    int replace_position = 0; 
-    for(int i; i< formula.length(); i++){
-        replace_position = formula.find('{');
-
-    }
-}
-
 // Function to find precedence of  
 // operators. 
+//Think that I dont need it anymore
 int precedence(char op){ 
     if(op == '+'||op == '-') 
     return 1; 
@@ -61,6 +50,7 @@ int precedence(char op){
 } 
   
 // Function to perform arithmetic operations. 
+//Think that I dont need it anymore
 float applyOp(int a, int b, char op){ 
     switch(op){ 
         case '+': return a + b; 
@@ -80,6 +70,7 @@ float applyOp(int a, int b, char op){
 
 // Function that returns value of 
 // expression after evaluation. 
+//Think that I dont need it anymore
 int formula_to_postfix_notation(const std::string tokens){ 
     int i; 
     // stack to store float values. 
@@ -95,33 +86,26 @@ int formula_to_postfix_notation(const std::string tokens){
           
         // Current token is an opening  
         // brace, push it to 'ops' 
-        else if(tokens[i] == '('){ 
+        else if(tokens[i] == '(')
             ops.push(tokens[i]); 
-        } 
           
         // Current token is a number, push  
         // it to stack for numbers. 
         else if(isdigit(tokens[i])){ 
             int val = 0; 
-              
             // There may be more than one 
             // digits in number. 
-            while(i < tokens.length() &&  
-                        isdigit(tokens[i])) 
-            { 
+            while(i < tokens.length() && isdigit(tokens[i])){
                 val = (val*10) + (tokens[i]-'0'); 
                 i++; 
             } 
-              
             values.push(val); 
         } 
           
         // Closing brace encountered, solve  
         // entire brace. 
-        else if(tokens[i] == ')') 
-        { 
-            while(!ops.empty() && ops.top() != '(') 
-            { 
+        else if(tokens[i] == ')'){
+            while(!ops.empty() && ops.top() != '('){
                 int val2 = values.top(); 
                 values.pop(); 
                   
@@ -140,47 +124,36 @@ int formula_to_postfix_notation(const std::string tokens){
         } 
           
         // Current token is an operator. 
-        else
-        { 
+        else{
             // While top of 'ops' has same or greater  
             // precedence to current token, which 
             // is an operator. Apply operator on top  
             // of 'ops' to top two elements in values stack. 
-            while(!ops.empty() && precedence(ops.top()) 
-                                >= precedence(tokens[i])){ 
+            while(!ops.empty() && precedence(ops.top()) >= precedence(tokens[i])){ 
                 int val2 = values.top(); 
                 values.pop(); 
-                  
                 int val1 = values.top(); 
                 values.pop(); 
-                  
                 char op = ops.top(); 
                 ops.pop(); 
-                  
                 values.push(applyOp(val1, val2, op)); 
             } 
-              
             // Push current token to 'ops'. 
             ops.push(tokens[i]); 
         } 
     } 
-      
     // Entire expression has been parsed at this 
     // point, apply remaining ops to remaining 
     // values. 
     while(!ops.empty()){ 
         int val2 = values.top(); 
         values.pop(); 
-                  
         int val1 = values.top(); 
         values.pop(); 
-                  
         char op = ops.top(); 
         ops.pop(); 
-                  
         values.push(applyOp(val1, val2, op)); 
     } 
-      
     // Top of 'values' contains result, return it. 
     return values.top();
 } 
@@ -201,16 +174,15 @@ void ReplaceStringInPlace(std::string& subject, const std::string& search, const
 void replace_variables_in_string(std::string &formula){
 	int flag = 0;
     std::string buffer;
-//{Hola} + {todo}
+
 	for( int i = 0; i < formula.length(); i++){
 		if(formula[i] == '{'){
 			flag = i+1;
             buffer += formula[i];
 			continue;
 		}
-		if(flag != 0 && formula[i] != '{'){
+		if(flag != 0 && formula[i] != '{')
             buffer += formula[i];
-		}
 
         if(formula[i] == '}'){
             std::string buffer2;
@@ -223,6 +195,65 @@ void replace_variables_in_string(std::string &formula){
         }
     }
 }
+
+//Function to return precedence of operators 
+int prec(char c){ 
+	if(c == '^') 
+        return 3; 
+	else if(c == '*' || c == '/') 
+        return 2; 
+	else if(c == '+' || c == '-') 
+        return 1; 
+	else
+        return -1; 
+} 
+
+// The main function to convert infix expression 
+//to postfix expression 
+std::string infixToPostfix(std::string s){
+	std::stack<char> st;
+	st.push('N');
+	int l = s.length();
+	std::string ns;
+
+	for(int i = 0; i < l; i++){
+		// If the scanned character is an operand, add it to output string. 
+		if((s[i] >= 'a' && s[i] <= 'z')||(s[i] >= 'A' && s[i] <= 'Z')) 
+            ns+=s[i]; 
+		// If the scanned character is an ‘(‘, push it to the stack. 
+		else if(s[i] == '(') 
+            st.push('('); 
+		
+		// If the scanned character is an ‘)’, pop and to output string from the stack 
+		// until an ‘(‘ is encountered. 
+		else if(s[i] == ')'){
+			while(st.top() != 'N' && st.top() != '('){
+				char c = st.top(); 
+				st.pop(); 
+                ns += c; 
+			} 
+			if(st.top() == '('){
+				char c = st.top(); 
+				st.pop(); 
+			} 
+		} 
+		//If an operator is scanned 
+		else{ 
+			while(st.top() != 'N' && prec(s[i]) <= prec(st.top())){ 
+				char c = st.top(); 
+				st.pop(); 
+				ns += c; 
+			} 
+			st.push(s[i]); 
+		} 
+	} 
+	//Pop all the remaining elements from the stack 
+	while(st.top() != 'N'){ 
+		char c = st.top(); 
+		st.pop(); 
+		ns += c; 
+	} 
+} 
 
 //****************CLASS FUNCTIONS********************
 //Read question from keyboard to a string
@@ -242,7 +273,6 @@ void Input::print_question(){
 //also convert it to postfix notation for future use
 int Input::read_formula(){
     std::getline(std::cin, formula);
-
     std::vector <std::string> variables;
     std::string buffer;
     int counter = 0;
@@ -254,7 +284,6 @@ int Input::read_formula(){
                 counter++;
         }
     }
-
     if(counter == variable_names.size() && counter == variables.size()){
         std::cout << "Variables were well written" << std::endl;
         //Here the parser and postfix converter
@@ -271,12 +300,12 @@ int Input::read_formula(){
 void Input::print_formula(){
 	std::cout << formula << std::endl;
 }
+
 //Accepts the Answer strcuture
 //Modifies tolerance parameters
 void Input::set_tolerance(Answer& answer){ //Not implemented
     std::cout << "Ingrese la tolerancia de la respuesta" << "\n";
     std::cin >> answer.tolerance;
-
     std::cout << "Ingrese el tipo de tolerancia" << "\n"
             << "1." << "\t" << "Relativa" << "\n"
             << "2." << "\t" << "Nominal" << "\n"
@@ -321,42 +350,32 @@ ret:std::cout << "Desea agregar " << feedback_type << "\n"
 // function to split string into substrings on the 
 // basis of delimiter and return the substrings 
 // after split in a vector of strings
-std::vector<std::string> Input::split_string(std::string str, char dl) 
-{ 
+std::vector<std::string> Input::split_string(std::string str, char dl){
     std::string word = ""; 
-  
     // to count the number of split strings 
     int num = 0; 
-  
     // adding delimiter character at the end 
     // of 'str' 
     str = str + dl; 
-  
     // length of 'str' 
     int l = str.size(); 
-  
     // traversing 'str' from left to right 
     std::vector<std::string> substr_list; 
     for (int i = 0; i < l; i++) { 
-  
         // if str[i] is not equal to the delimiter 
         // character then accumulate it to 'word' 
         if (str[i] != dl) 
             word = word + str[i]; 
-  
         else { 
-  
             // if 'word' is not an empty string, 
             // then add this 'word' to the array 
             // 'substr_list[]' 
             if ((int)word.size() != 0) 
                 substr_list.push_back(word); 
-  
             // reset 'word' 
             word = ""; 
         } 
     } 
-  
     // return the splitted strings 
     return substr_list; 
 }

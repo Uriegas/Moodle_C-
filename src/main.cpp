@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
     Menu menu;
-    Input teacher;
+//    Input teacher;
     int selected_question;
     int selected_action = menu.show_menu();
 
