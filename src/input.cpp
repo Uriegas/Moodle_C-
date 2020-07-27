@@ -256,7 +256,7 @@ std::string infixToPostfix(std::string s){
 } 
 
 //****************CLASS FUNCTIONS********************
-//Read question from keyboard to a string
+//Rea d question from keyboard to a string
 std::string Input::read_question(){
     std::string question;
     std::getline(std::cin, question);
@@ -269,14 +269,45 @@ void Input::print_question(){
 	std::cout << question << std::endl;
 }
 
-//Reads from keyboard and saves to string the formula
-//also convert it to postfix notation for future use
-std::vector<std::string> Input::read_formula(){
-    std::getline(std::cin, formula);
-    std::vector <std::string> variables;
-    std::string buffer;
-    int counter = 0;
+//Reads from keyboard and saves to an string
+//ans converts it from infix to postifx notation
+//It returns a vector in postfix notation
+std::vector<std::string> Input::read_formula(const Question& question){
+    std::string formula;
+    std::vector<std::string> variables; //stack to store variables
+    std::stack<std::string> operators;
+    int counter;
 
+foo:std::getline(std::cin, formula);
+//    std::vector <std::string> variables;
+//    std::string buffer;
+//    int counter = 0;
+
+    variables = string_variable_analizer(formula);
+    //This for loop checks if the variables in the question
+    //are the same as the question in the answer
+    //just to make your that the user entered correct input
+    counter = 0;
+    for(int i = 0; i<variables.size(); i++){
+        for(int j = 0; j < question.variables.size(); j++){
+            if(variables[i] == question.variables[j])
+                counter++;
+        }
+    }
+    if(counter == 0){
+        std::cout << "Please input the same variables used in formula" << "\n"
+                    << "Input the formula please" << std::endl;
+        goto foo;
+    }
+    else{
+        std::cout << "There are " << counter << "variables in use in the formula" <<std::endl;
+    }
+
+    //Infix to Postfix notation Algorithm implemeting functions
+    while(!formula.empty()){ //Do this while the formula has things in it (iterate over it)
+
+    }
+/*
     variables = string_variable_analizer(formula);
     for(int j=0; j<variable_names.size(); j++){
         for(int i=0; i<variables.size(); i++){
@@ -294,11 +325,13 @@ std::vector<std::string> Input::read_formula(){
         std::cout<< "Error: Ingreso mal las varaibles" << std::endl;
 //        return 0;
     }
+    */
 }
 
 //Prints the formula string in the class Input
-void Input::print_formula(){
-	std::cout << formula << std::endl;
+void Input::print_formula(const std::vector<std::string>& formula){
+    for (const auto& value : formula)
+        std::cout << value << '\n';
 }
 
 //Accepts the Answer strcuture

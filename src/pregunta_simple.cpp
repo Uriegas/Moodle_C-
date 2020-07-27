@@ -28,7 +28,7 @@ void Pregunta_Simple::create_simple_question(){
     //Read answer input
     std::cout << "Ingrese la formula de la respuesta correcta" << "\n";
     //read_formula should return a vector<string>
-    answer.answer_formula = simple_input.read_formula();//Suppose that it returns a postfix notation
+    answer.answer_formula = simple_input.read_formula(question);//Suppose that it returns a postfix notation
     simple_input.set_tolerance(answer);
     std::cout << "Ingrese la cantidad de decimales a mostrar" << "\n";
     std::cin >> answer.number_of_decimals;

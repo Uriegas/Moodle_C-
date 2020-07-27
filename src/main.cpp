@@ -9,9 +9,8 @@ using namespace std;
 //Author: Jesus Eduardo Uriegas Ibarra
 //Moodle Replica in C++
 
-int main() {
+int main() {/*
     Menu menu;
-//    Input teacher;
     int selected_question;
     int selected_action = menu.show_menu();
 
@@ -50,13 +49,17 @@ int main() {
     cout<< "Pregunta No. " << " guardada correctamente" << endl; //Ougth to implement number of question
     //After creating a question save it to a file.
     //Create class File, with methods for converting a class into a File in a database (.txt)
+    //This part is not implemented yet
     menu.show_menu(); //Call again to continue add/modify/exit cycle
-/*
-    teacher.read_question();
-    teacher.print_question();
-    cout << "Ingrese la formula que se usara para calcular el resultado correcto: " << endl;
-    teacher.read_formula();
-    teacher.print_formula();
-    return 0;
 */
+    Input teacher;
+    Question question;
+    std::vector<std::string> formula;
+    std::cout << "Ingrese el texto de la pregunta" << "\n";
+    question.question_text = teacher.read_question();
+    question.variables = teacher.string_variable_analizer(question.question_text);
+    cout << "Ingrese la formula que se usara para calcular el resultado correcto: " << endl;
+    formula = teacher.read_formula(question);
+    teacher.print_formula(formula);
+    return 0;
 }
