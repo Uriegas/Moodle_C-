@@ -9,7 +9,7 @@ using namespace std;
 //Author: Jesus Eduardo Uriegas Ibarra
 //Moodle Replica in C++
 
-int main() {/*
+int main() {
     Menu menu;
     int selected_question;
     int selected_action = menu.show_menu();
@@ -51,7 +51,7 @@ int main() {/*
     //Create class File, with methods for converting a class into a File in a database (.txt)
     //This part is not implemented yet
     menu.show_menu(); //Call again to continue add/modify/exit cycle
-*/
+    /*
     Input teacher;
     Question question;
     std::queue<tokens> formula;
@@ -60,6 +60,6 @@ int main() {/*
     question.variables = teacher.string_variable_analizer(question.question_text);
     cout << "Ingrese la formula que se usara para calcular el resultado correcto: " << endl;
     formula = teacher.read_formula(question.answer_formula);
-    cout << formula << endl;
+    cout << formula << endl;*/
     return 0;
 }

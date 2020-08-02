@@ -6,7 +6,7 @@
 void Pregunta_Simple::create_simple_question(){
     //Instatiate classes about the question elemnts
     Input simple_input;
-    Question question; 
+    Question1 question; 
     Answer answer;
     Units units;
     Multiple_Attempts multiple_attempts;
