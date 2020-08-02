@@ -41,3 +41,31 @@ Please do a little research on installing CMake projects before installing in an
 testing.sh is file in the main directory that is going to build from source and open the executable automatically. It only works on Linux.  
 
 This program make use of the lexer and parser functions in the following [repository](https://github.com/Uriegas/Lexer-Parser-in-Cpp) is better to prove the code before using the functions, it has not been fully tested yet.  
+
+## FOR DEVELOPERS   
+### Question Modularitation
+There are 3 types of questions:  
+1. Simple Calculated Question
+2. Normal Calculated Question
+3. Multiple Calculated Question
+
+For a better performance the questions can be subdivided with 3 functions:  
+1. `question_edit()`
+2. `dataset_properties()`
+3. `dataset_editing()`
+
+This is the main format for every calculated question eachone with their specific specs.  
+
+### Dataset
+For storing the datasets configuration we only use the following container:   
+```c++
+    template <class T, class Compare = less<T>, class Alloc = allocator<T>>
+    class set;
+```
+defined in the std namespace from the STL library.  
+
+### Randomness
+For generating random numbers we use a simple density probabilty function.  
+1. Uniform. It means that every item has the same probability of ocurrance.
+2. Logarithmic Unifor. The random items instantiation tends to minor values.
+
