@@ -21,6 +21,7 @@ void Pregunta_Simple::create_simple_question(){
     question.set_general_feedback();
 
     //<<<<<<<<<< Answer Section >>>>>>>>>>>>>>>
+    Answer answer;
     //Read answer input
     std::cout << "Ingrese la formula de la respuesta correcta" << "\n";
     //read_formula should return a vector<string>

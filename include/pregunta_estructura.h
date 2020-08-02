@@ -19,7 +19,7 @@ struct Answer {
     public:
         Answer()
             :calification(100), tolerance(0), tolerance_type(RELATIVE), number_of_decimals(2), decimal_or_significative(DECIMAL){}
-        void set_ans();
+        void read_formula();
         std::queue <tokens> answer_formula;
         size_t calification;//Specified in percentage 0-100%
         float tolerance;
@@ -28,6 +28,18 @@ struct Answer {
         bool decimal_or_significative;//Defualt to DECIMAL
         std::string specific_feedback;
 };
+
+void Answer::read_formula(){
+    std::string formula;
+    std::getline(std::cin, formula);
+    vector_error tokenized_string;//Save tokenized string with error
+
+    tokenized_string = lexer(formula);
+    if(tokenized_string.error != NOERROR)//If there is an error in the string print it
+        return_error(tokenized_string.error);
+    else//If there is no error parse the string and save it to Answer object
+        answer_formula = parser(tokenized_string.vector);
+}
 
 class Question
 {//Comments specifies the sections found in Moodle

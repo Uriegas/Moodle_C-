@@ -89,7 +89,7 @@ void print_question(){
 //It returns a vector in postfix notation
 std::queue<tokens> read_formula(std::string string){
     //Tokenize and parse the string
-    std::queue<tokens> postfix_formula = parser( lexer(string) );
+    std::queue<tokens> postfix_formula = parser( lexer(string).vector );
     return postfix_formula;
 }
 
