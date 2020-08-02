@@ -1,6 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 #include "../include/pregunta_estructura.h"
+#include "../include/parser.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -14,16 +15,16 @@ class Input{
 		Input(){};
 		std::string read_question();
 		void read_answer();
+		std::queue <tokens> read_formula(std::string string);
 		void print_question();
 		std::ofstream generate_questions();//Not implemented
 		void print_answer();
-		std::vector<std::string> read_formula(const Question& question);
-		void print_formula(const std::vector<std::string>& formula);
 		void set_tolerance(Answer& answer); //Not implemented 
 		std::string feedback_function(const std::string& feedback_type);
 		std::vector<std::string> string_variable_analizer(const std::string base);
 		std::string current_date();
 		std::vector<std::string> split_string(std::string str, char dl);
+		float evaluate(std::queue<tokens> string, float lower, float upper);
 
 	private:
 		std::string question; //String where the question is saved

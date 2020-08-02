@@ -272,64 +272,10 @@ void Input::print_question(){
 //Reads from keyboard and saves to an string
 //ans converts it from infix to postifx notation
 //It returns a vector in postfix notation
-std::vector<std::string> Input::read_formula(const Question& question){
-    std::string formula;
-    std::vector<std::string> variables; //stack to store variables
-    std::stack<std::string> operators;
-    int counter;
-
-foo:std::getline(std::cin, formula);
-//    std::vector <std::string> variables;
-//    std::string buffer;
-//    int counter = 0;
-
-    variables = string_variable_analizer(formula);
-    //This for loop checks if the variables in the question
-    //are the same as the question in the answer
-    //just to make your that the user entered correct input
-    counter = 0;
-    for(int i = 0; i<variables.size(); i++){
-        for(int j = 0; j < question.variables.size(); j++){
-            if(variables[i] == question.variables[j])
-                counter++;
-        }
-    }
-    if(counter == 0){
-        std::cout << "Please input the same variables used in formula" << "\n"
-                    << "Input the formula please" << std::endl;
-        goto foo;
-    }
-    else{
-        std::cout << "There are " << counter << "variables in use in the formula" <<std::endl;
-    }
-
-    //Infix to Postfix notation Algorithm implemeting functions
-    
-/*
-    variables = string_variable_analizer(formula);
-    for(int j=0; j<variable_names.size(); j++){
-        for(int i=0; i<variables.size(); i++){
-            if(variables[i] == variable_names[j])
-                counter++;
-        }
-    }
-    if(counter == variable_names.size() && counter == variables.size()){
-        std::cout << "Variables were well written" << std::endl;
-        //Here the parser and postfix converter
-        deletespace(formula);
-        replace_variables_in_string(formula);
-    }
-    else{
-        std::cout<< "Error: Ingreso mal las varaibles" << std::endl;
-//        return 0;
-    }
-    */
-}
-
-//Prints the formula string in the class Input
-void Input::print_formula(const std::vector<std::string>& formula){
-    for (const auto& value : formula)
-        std::cout << value << '\n';
+std::queue<tokens> Input::read_formula(std::string string){
+    //Tokenize and parse the string
+    std::queue<tokens> postfix_formula = parser( lexer(string) );
+    return postfix_formula;
 }
 
 //Accepts the Answer strcuture

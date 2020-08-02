@@ -54,12 +54,12 @@ int main() {/*
 */
     Input teacher;
     Question question;
-    std::vector<std::string> formula;
+    std::queue<tokens> formula;
     std::cout << "Ingrese el texto de la pregunta" << "\n";
     question.question_text = teacher.read_question();
     question.variables = teacher.string_variable_analizer(question.question_text);
     cout << "Ingrese la formula que se usara para calcular el resultado correcto: " << endl;
-    formula = teacher.read_formula(question);
-    teacher.print_formula(formula);
+    formula = teacher.read_formula(question.answer_formula);
+    cout << formula << endl;
     return 0;
 }

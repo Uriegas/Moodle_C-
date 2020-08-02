@@ -24,6 +24,7 @@ struct tokens{
 
 std::vector<tokens> lexer(std::string string);
 std::queue <tokens> parser(std::vector <tokens> string);
+std::ostream& operator<<(std::ostream& output, std::queue<tokens> vector_token);
 float evaluate(std::queue<tokens> string, float lower, float upper);
 
 #endif //PARSER_H

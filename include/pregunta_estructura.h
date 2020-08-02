@@ -11,6 +11,7 @@
 struct Question {
     std::string question_name;
     std::string question_text;
+    std::string answer_formula;
     std::vector <std::string> variables;
     int default_score;
     std::string general_feedback;
