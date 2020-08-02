@@ -19,6 +19,7 @@ struct Answer {
     public:
         Answer()
             :calification(100), tolerance(0), tolerance_type(RELATIVE), number_of_decimals(2), decimal_or_significative(DECIMAL){}
+        void set_ans();
         std::queue <tokens> answer_formula;
         size_t calification;//Specified in percentage 0-100%
         float tolerance;
@@ -65,9 +66,11 @@ public:
     Question(int question_type)
         :category(1), default_score(1), unit_treatment(NO_UNITS), question_type(question_type){}
     //*******First Page*******
-    void read_question_name(void);
-    void read_question_text(void);
-    void read_answer();
+    void read_question_name();
+    void read_question_text();
+    void set_default_score(int score);
+    void set_general_feedback();
+    void set_answer(Answer answer);
     std::queue <tokens> read_formula(std::string string);
     void print_question();
     std::ofstream generate_questions();//Not implemented
@@ -80,13 +83,26 @@ public:
     float evaluate(std::queue<tokens> string, float lower, float upper);
 
 };
-void Question::read_question_name(void){
+
+void Question::read_question_name(){
     std::getline(std::cin, question_name);
 }
-void Question::read_question_text(void){
+
+void Question::read_question_text(){
     //Save the question text to a string
     std::getline(std::cin, question_text);
     //Get the variables in question text
     wildcards = string_variable_analizer(question_text);
+}
+
+void Question::set_default_score(int score){
+    default_score = score;
+}
+
+void Question::set_answer(Answer answer){
+    answers.push_back(answer);
+}
+void Question::set_general_feedback(){
+    general_feedback = feedback_function("retroalimentacion general");
 }
 #endif

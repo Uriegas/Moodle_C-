@@ -5,24 +5,20 @@
 //****************CLASS FUNCTIONS********************
 void Pregunta_Simple::create_simple_question(){
     //Instatiate classes about the question elemnts
-    Input simple_input;
-    Question1 question; 
-    Answer answer;
-    Units units;
-    Multiple_Attempts multiple_attempts;
-    Landmarks_Group landmarks;
-    Time time;
+    Question question(CALCULATED);
+    int score;
     //<<<<<<<<<< HERE is all the process of user interface (input from teacher) >>>>>>>>>>>>>>>
     //<<<<<<<<<< Question Section >>>>>>>>>>>>>>>
     std::cout << "Ingrese el nombre de la pregunta" << "\n";
     std::cin.ignore();
-    question.question_name = simple_input.read_question();
+    question.read_question_name();
     std::cout << "Ingrese el texto de la pregunta" << "\n";
-    question.question_text = simple_input.read_question();
-    question.variables = simple_input.string_variable_analizer(question.question_text);
-    std::cout << "Ingrese la puntuacion por defectuo de la pregunta" << "\n";
-    std::cin >> question.default_score;
-    question.general_feedback = simple_input.feedback_function("retroalimentacion general");
+    question.read_question_text();
+    std::cout << "Ingrese la puntuacion por defectuo de la pregunta" << "\n"
+                << "(Puntos de la pregunta) Comunmente este valor es de 1" << "\n";
+    std::cin >> score;
+    question.set_default_score(score);
+    question.set_general_feedback();
 
     //<<<<<<<<<< Answer Section >>>>>>>>>>>>>>>
     //Read answer input
