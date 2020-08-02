@@ -64,6 +64,29 @@ private:
 public:
     Question(int question_type)
         :category(1), default_score(1), unit_treatment(NO_UNITS), question_type(question_type){}
-};
+    //*******First Page*******
+    void read_question_name(void);
+    void read_question_text(void);
+    void read_answer();
+    std::queue <tokens> read_formula(std::string string);
+    void print_question();
+    std::ofstream generate_questions();//Not implemented
+    void print_answer();
+    void set_tolerance(Answer& answer); //Not implemented 
+    std::string feedback_function(const std::string& feedback_type);
+    std::vector<std::string> string_variable_analizer(const std::string base);
+    std::string current_date();
+    std::vector<std::string> split_string(std::string str, char dl);
+    float evaluate(std::queue<tokens> string, float lower, float upper);
 
+};
+void Question::read_question_name(void){
+    std::getline(std::cin, question_name);
+}
+void Question::read_question_text(void){
+    //Save the question text to a string
+    std::getline(std::cin, question_text);
+    //Get the variables in question text
+    wildcards = string_variable_analizer(question_text);
+}
 #endif
