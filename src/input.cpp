@@ -72,7 +72,7 @@ float applyOp(int a, int b, char op){
 // expression after evaluation. 
 //Think that I dont need it anymore
 int formula_to_postfix_notation(const std::string tokens){ 
-    int i; 
+    int i;
     // stack to store float values. 
     std::stack <float> values; 
     // stack to store operators. 
@@ -87,7 +87,7 @@ int formula_to_postfix_notation(const std::string tokens){
         // Current token is an opening  
         // brace, push it to 'ops' 
         else if(tokens[i] == '(')
-            ops.push(tokens[i]); 
+            ops.push(tokens[i]);
           
         // Current token is a number, push  
         // it to stack for numbers. 
@@ -156,7 +156,7 @@ int formula_to_postfix_notation(const std::string tokens){
     } 
     // Top of 'values' contains result, return it. 
     return values.top();
-} 
+}
 
 //Give it a base string (subject), and search and replace strings, 
 //and it changes the result string
@@ -197,7 +197,7 @@ void replace_variables_in_string(std::string &formula){
 }
 
 //Function to return precedence of operators 
-int prec(char c){ 
+int prec(char c){
 	if(c == '^') 
         return 3; 
 	else if(c == '*' || c == '/') 
@@ -218,7 +218,7 @@ std::string infixToPostfix(std::string s){
 
 	for(int i = 0; i < l; i++){
 		// If the scanned character is an operand, add it to output string. 
-		if((s[i] >= 'a' && s[i] <= 'z')||(s[i] >= 'A' && s[i] <= 'Z')) 
+		if((s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z')) 
             ns+=s[i]; 
 		// If the scanned character is an ‘(‘, push it to the stack. 
 		else if(s[i] == '(') 
@@ -304,9 +304,7 @@ foo:std::getline(std::cin, formula);
     }
 
     //Infix to Postfix notation Algorithm implemeting functions
-    while(!formula.empty()){ //Do this while the formula has things in it (iterate over it)
-
-    }
+    
 /*
     variables = string_variable_analizer(formula);
     for(int j=0; j<variable_names.size(); j++){
