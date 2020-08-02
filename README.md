@@ -69,3 +69,6 @@ For generating random numbers we use a simple density probabilty function.
 1. Uniform. It means that every item has the same probability of ocurrance.
 2. Logarithmic Unifor. The random items instantiation tends to minor values.
 
+### Save Configuration
+After creating the exam is necessary to store the configuration to a file, so that it can be used by other program that read it and applies the exam to the student.    
+For this another program should be created or at least implement such a program in the current one.
