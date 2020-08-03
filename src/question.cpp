@@ -64,6 +64,7 @@ void Answer::set_specific_feedback(){
 }
 
 //Question Class
+//General
 void Question::read_question_name(){
     std::getline(std::cin, question_name);
 }
@@ -85,15 +86,8 @@ void Question::set_answer(Answer answer){
 void Question::set_general_feedback(){
     general_feedback = feedback_function("retroalimentacion general");
 }
-void Question::set_landmarks(){
-    landmarks[0] = feedback_function("marcas");
-    landmarks = split_string(landmarks[0], ' ');
-}
-void Question::time(){
-    if(created == "\n")
-        created = current_date();
-    last_modified = current_date();
-}
+//Units treatment
+//Units
 void Question::set_units(){
     int select;
 uni:std::cout << "Desea calificar unidades?" << "\n"
@@ -105,18 +99,46 @@ uni:std::cout << "Desea calificar unidades?" << "\n"
     if(select == 0){
         unit = "\n";
         unit_penalization = 0;
+        unit_treatment = NO_UNITS;
     }
     else if(select == 1 || select == 2){
         std::cout << "Ingrese la unidad" << "\n";
         std::getline(std::cin, unit);
+        int optional;
+op:     std::cout << "Unidades van a la derecha o izquierda?\n"
+                << "1." << "\t" << "Derecha, como 100km, cm, m" << "\n"
+                << "2." << "\t" << "Izquierda, como $100" << std::endl;
+        std::cin >> optional;
+        if(optional == 1)
+            unit_side = RIGHT;
+        else if(optional == 2)
+            unit_side = LEFT;
+        else
+            std::cout << "Ingrese valores validos\n";
+            goto op;
+
         if(select == 2){
+            unit_treatment = OBLIGATORY_UNITS;
             std::cout << "Ingrese la penalizacion" << "\n"
                         << "(Penalizacion sobre la respuesta)" << std::endl;
-            std::cin >> unit_penalization;
+                        //Not implemented the multiple option or string form
         }
+        else
+            unit_treatment = OPTIONAL_UNITS;
     }
     else{
         std::cout << "ERROR: Ingrese una opcion valida" << "\n";
         goto uni;
     }
+}
+//Landmarks
+void Question::set_landmarks(){
+    landmarks[0] = feedback_function("marcas");
+    landmarks = split_string(landmarks[0], ' ');
+}
+//Created/Modified
+void Question::time(){
+    if(created == "\n")
+        created = current_date();
+    last_modified = current_date();
 }
