@@ -51,7 +51,6 @@ private:
     std::vector<Answer> answers;//A data structure to save the answers configuration
     //Units treatment
     size_t unit_treatment;
-    float unit_penalization;
     size_t unit_input;
     bool unit_side;
     //Units
@@ -72,20 +71,20 @@ public:
     void set_default_score(int score);
     void set_general_feedback();
     void set_answer(Answer answer);
-    std::queue <tokens> read_formula(std::string string);
-    void print_question();
-    std::ofstream generate_questions();//Not implemented
-    void print_answer();
-    void set_tolerance(Answer& answer); //Not implemented 
-    std::string feedback_function(const std::string& feedback_type);
-    std::vector<std::string> string_variable_analizer(const std::string base);
-    std::string current_date();
-    std::vector<std::string> split_string(std::string str, char dl);
-    float evaluate(std::queue<tokens> string, float lower, float upper);
+//    std::queue <tokens> read_formula(std::string string);
+//    std::ofstream generate_questions();//Not implemented
+//    void print_answer();
     void set_units();
+//    void set_tolerance(Answer& answer); //Not implemented 
+//    std::string feedback_function(const std::string& feedback_type);
+//    std::vector<std::string> string_variable_analizer(const std::string base);
+//    std::string current_date();
+//    std::vector<std::string> split_string(std::string str, char dl);
+//    float evaluate(std::queue<tokens> string, float lower, float upper);
     void set_landmarks();
     //Created/Modified
     void time();
+    //Public to print it
     std::string created;
     std::string last_modified;
 };

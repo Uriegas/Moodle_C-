@@ -78,11 +78,6 @@ std::string read_question(){
     return question;
 }
 
-//Prints the question string to the screen
-void print_question(){
-//	std::cout << "You are in question no. " << question_number << std::endl;
-	std::cout << question << std::endl;
-}
 
 //Reads from keyboard and saves to an string
 //ans converts it from infix to postifx notation
@@ -92,7 +87,7 @@ std::queue<tokens> read_formula(std::string string){
     std::queue<tokens> postfix_formula = parser( lexer(string).vector );
     return postfix_formula;
 }
-
+/*
 //Accepts the Answer strcuture
 //Modifies tolerance parameters
 void set_tolerance(Answer& answer){ //Not implemented
@@ -104,7 +99,7 @@ void set_tolerance(Answer& answer){ //Not implemented
             << "3." << "\t" << "Geometrica" << std::endl;
     std::cin >> answer.tolerance_type;
 } 
-
+*/
 //Simple function that returns
 //the current date and time
 std::string current_date(){

@@ -80,11 +80,11 @@ void Question::set_default_score(int score){
     default_score = score;
 }
 
-void Question::set_answer(Answer answer){
-    answers.push_back(answer);
-}
 void Question::set_general_feedback(){
     general_feedback = feedback_function("retroalimentacion general");
+}
+void Question::set_answer(Answer answer){
+    answers.push_back(answer);
 }
 //Units treatment
 //Units

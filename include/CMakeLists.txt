@@ -1,16 +1,13 @@
 add_library(
-	moodle_lib SHARED
+	moodle_lib STATIC
 	input.h
 	menu.h
-	pregunta_calculada.h
-	pregunta_multiple.h
-	pregunta_simple.h
-	pregunta_estructura.h
+	parser.h
+	question.h
 	${PROJECT_SOURCE_DIR}/src/input.cpp
 	${PROJECT_SOURCE_DIR}/src/menu.cpp
-	${PROJECT_SOURCE_DIR}/src/pregunta_calculada.cpp
-	${PROJECT_SOURCE_DIR}/src/pregunta_multiple.cpp
-	${PROJECT_SOURCE_DIR}/src/pregunta_simple.cpp
+	${PROJECT_SOURCE_DIR}/src/parser.cpp
+	${PROJECT_SOURCE_DIR}/src/question.cpp
 	)
 
 #add_library(
