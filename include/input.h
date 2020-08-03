@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
-#include "../include/pregunta_estructura.h"
 #include "../include/parser.h"
+#include "../include/question.h"
 #include <iostream>
 #include <string>
 #include <vector>

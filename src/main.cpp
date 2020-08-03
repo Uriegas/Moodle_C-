@@ -1,5 +1,6 @@
 #include "../include/input.h"
 #include "../include/menu.h"
+#include "../include/question.h"
 using namespace std;
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -11,6 +12,7 @@ int main() {
     int selected_question;
     int selected_action = menu.show_menu();
 
+    /*
     if(selected_action == 0)
         return 0;
     else if(selected_action == 1)
@@ -48,7 +50,6 @@ int main() {
     //Create class File, with methods for converting a class into a File in a database (.txt)
     //This part is not implemented yet
     menu.show_menu(); //Call again to continue add/modify/exit cycle
-    /*
     Input teacher;
     Question question;
     std::queue<tokens> formula;
