@@ -143,6 +143,7 @@ public:
     std::string current_date();
     std::vector<std::string> split_string(std::string str, char dl);
     float evaluate(std::queue<tokens> string, float lower, float upper);
+    void set_units();
     void set_landmarks();
     //Created/Modified
     void time();
@@ -179,5 +180,31 @@ void Question::time(){
     if(created == "\n")
         created = current_date();
     last_modified = current_date();
+}
+void Question::set_units(){
+    int select;
+uni:std::cout << "Desea calificar unidades?" << "\n"
+            << "0." << "\t" << "No, no emplear unidades" << "\n"
+            << "1." << "\t" << "Si, OPCIONALES sin calicar" << "\n"
+            << "2." << "\t" << "Si, las unidades se calificaran" << std::endl;
+    std::cin.ignore();
+    std::cin >> select;
+    if(select == 0){
+        unit = "\n";
+        unit_penalization = 0;
+    }
+    else if(select == 1 || select == 2){
+        std::cout << "Ingrese la unidad" << "\n";
+        std::getline(std::cin, unit);
+        if(select == 2){
+            std::cout << "Ingrese la penalizacion" << "\n"
+                        << "(Penalizacion sobre la respuesta)" << std::endl;
+            std::cin >> unit_penalization;
+        }
+    }
+    else{
+        std::cout << "ERROR: Ingrese una opcion valida" << "\n";
+        goto uni;
+    }
 }
 #endif
