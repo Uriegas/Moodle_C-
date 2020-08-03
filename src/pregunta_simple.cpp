@@ -66,8 +66,7 @@ uni:std::cout << "Desea calificar unidades?" << "\n";
     //This section is not included in the simple question format
 
     //<<<<<<<<<< Landmark Section >>>>>>>>>>>>>>>
-    landmarks.landmarks[0] = simple_input.feedback_function("marcas");
-    landmarks.landmarks = simple_input.split_string(landmarks.landmarks[0], ' ');
+    question.set_landmarks();
 
     //<<<<<<<<<< Created/Last Change Section >>>>>>>>>>>>>>>
     question.time();

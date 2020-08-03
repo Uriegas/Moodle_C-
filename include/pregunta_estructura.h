@@ -143,8 +143,9 @@ public:
     std::string current_date();
     std::vector<std::string> split_string(std::string str, char dl);
     float evaluate(std::queue<tokens> string, float lower, float upper);
-    void time();
+    void set_landmarks();
     //Created/Modified
+    void time();
     std::string created;
     std::string last_modified;
 };
@@ -169,6 +170,10 @@ void Question::set_answer(Answer answer){
 }
 void Question::set_general_feedback(){
     general_feedback = feedback_function("retroalimentacion general");
+}
+void Question::set_landmarks(){
+    landmarks[0] = feedback_function("marcas");
+    landmarks = split_string(landmarks[0], ' ');
 }
 void Question::time(){
     if(created == "\n")
