@@ -24,17 +24,17 @@ void Pregunta_Simple::create_simple_question(){
     Answer answer;
     //Read answer input
     std::cout << "Ingrese la formula de la respuesta correcta" << "\n";
-    //read_formula should return a vector<string>
-    answer.answer_formula = simple_input.read_formula(question);//Suppose that it returns a postfix notation
-    simple_input.set_tolerance(answer);
-    std::cout << "Ingrese la cantidad de decimales a mostrar" << "\n";
-    std::cin >> answer.number_of_decimals;
-dec:std::cout << "Decimales o cifras significativas?" << "\n";
-    std::cout << "0." << "\t" << "Decimal" << "\n"
-            << ">1." << "\t" << "Cifras Significativas" << std::endl;
-    std::cin.ignore();
-    std::cin >> answer.decimal_or_significative;
-    answer.specific_feedback = simple_input.feedback_function("retroalimentacion especifica");
+    //read_formula returns a postfix notation queue tokenized
+    answer.read_formula();
+    std::cout << "Ingrese la tolerancia y el tipo de tolerancia" << "\n"
+                << "Tipos de tolerancia:" << "\n"
+                << "1." << "\t" << "Relativa" << "\n"
+                << "2." << "\t" << "Nominal" << "\n"
+                << "3." << "\t" << "Geometrica" << "\n";
+    answer.set_tolerance();
+    answer.set_decimal();
+    answer.set_specific_feedback();
+    question.set_answer(answer);
 
     //<<<<<<<<<< Unit Section >>>>>>>>>>>>>>>
     int select;
