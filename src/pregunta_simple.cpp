@@ -70,12 +70,7 @@ uni:std::cout << "Desea calificar unidades?" << "\n";
     landmarks.landmarks = simple_input.split_string(landmarks.landmarks[0], ' ');
 
     //<<<<<<<<<< Created/Last Change Section >>>>>>>>>>>>>>>
-    if(time.created != "\n")
-        time.last_modified = simple_input.current_date();
-    else{
-        time.created = simple_input.current_date();
-        time.last_modified = simple_input.current_date();
-    }
-    std::cout<< "Pregunta creada en " << time.created << "\n";
-    std::cout<< "Pregunta modifica en " << time.last_modified << "\n";
+    question.time();
+    std::cout << "Pregunta creada en " << question.created << "\n"
+              << "Pregunta modifica en " << question.last_modified << "\n";
 }

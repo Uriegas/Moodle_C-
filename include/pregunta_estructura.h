@@ -111,7 +111,7 @@ private:
     //Answers
     std::vector<Answer> answers;//A data structure to save the answers configuration
     //Units treatment
-    size_t unit_treatment = NO_UNITS;//Default
+    size_t unit_treatment;
     float unit_penalization;
     size_t unit_input;
     bool unit_side;
@@ -123,13 +123,10 @@ private:
     std::queue <std::string> clues; //Display everytime that fails an attempt
     //Landmarks
     std::vector<std::string> landmarks;
-    //Created/Modified
-    std::string created = "\n";
-    std::string last_modified = "\n";
 
 public:
     Question(int question_type)
-        :category(1), default_score(1), unit_treatment(NO_UNITS), question_type(question_type){}
+        :category(1), default_score(1), unit_treatment(NO_UNITS), question_type(question_type), created("\n"){}
     //*******First Page*******
     void read_question_name();
     void read_question_text();
@@ -146,7 +143,10 @@ public:
     std::string current_date();
     std::vector<std::string> split_string(std::string str, char dl);
     float evaluate(std::queue<tokens> string, float lower, float upper);
-
+    void time();
+    //Created/Modified
+    std::string created;
+    std::string last_modified;
 };
 
 void Question::read_question_name(){
@@ -169,5 +169,10 @@ void Question::set_answer(Answer answer){
 }
 void Question::set_general_feedback(){
     general_feedback = feedback_function("retroalimentacion general");
+}
+void Question::time(){
+    if(created == "\n")
+        created = current_date();
+    last_modified = current_date();
 }
 #endif
