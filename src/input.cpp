@@ -134,6 +134,26 @@ ret:std::cout << "Desea agregar " << feedback_type << "\n"
     return feedback_return;
 }
 
+std::string feedback_function(const std::string& feedback_type, char& error){
+    std::string feedback_return;
+ret:std::cout << "Desea agregar " << feedback_type << "\n"
+            << "y = si" << "\n"
+            << "n = no" << "\n";
+    std::cin >> error;
+    if((error) == 'y'){
+        std::cout << "Ingrese la(s) " << feedback_type << "\n";
+        std::cin.ignore();
+        std::getline(std::cin, feedback_return);
+    }
+    else if((error) == 'n'){
+        feedback_return = "\n";
+    }
+    else{
+        std::cout << "Ingrese un valor valido" << "\n";
+        goto ret;
+    }
+    return feedback_return;
+}
 // function to split string into substrings on the 
 // basis of delimiter and return the substrings 
 // after split in a vector of strings

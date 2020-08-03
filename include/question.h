@@ -9,7 +9,7 @@
 
 enum TOLERANCE{RELATIVE = 1, NOMINAL, GEOMETRIC};
 enum DECIMAL_OR_SIGNIFICATIVE{DECIMAL = true, SIGNIFICATIVE = false};
-enum UNIT_TREATMENT{LEFT, RIGHT, NO_UNITS, OPTIONAL_UNITS, OBLIGATORY_UNITS, STRING_INPUT, MULTIPLE_OPTION};
+enum UNIT_TREATMENT{LEFT, RIGHT, NO_UNITS=0, OPTIONAL_UNITS, OBLIGATORY_UNITS, STRING_INPUT, MULTIPLE_OPTION};
 enum QUESTION_TYPE{CALCULATED, SIMPLE, MULTIPLE};
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -50,14 +50,12 @@ private:
     //Answers
     std::vector<Answer> answers;//A data structure to save the answers configuration
     //Units treatment
-    size_t unit_treatment;
-    size_t unit_input;
-    bool unit_side;
-    //Units
+    size_t unit_treatment;//Are units settled?
+    bool unit_side;//Are units on left or rigth side?
     std::string unit; //Ej. Meters, centimeters, feets, etc.
-    float unit_penalization;
+    float unit_penalization;//If bad unit input, then what percentage extract?
     //Multiple Attempts
-    float wrong_answer_penalization;//If incorrect answered, have another attempt but less calification
+    float attempt_penalization;//If incorrect answered, have another attempt but less calification
     std::queue <std::string> clues; //Display everytime that fails an attempt
     //Landmarks
     std::vector<std::string> landmarks;
@@ -81,6 +79,7 @@ public:
 //    std::string current_date();
 //    std::vector<std::string> split_string(std::string str, char dl);
 //    float evaluate(std::queue<tokens> string, float lower, float upper);
+    void set_multiple_attempts();
     void set_landmarks();
     //Created/Modified
     void time();

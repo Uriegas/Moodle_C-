@@ -89,19 +89,17 @@ void Question::set_answer(Answer answer){
 //Units treatment
 //Units
 void Question::set_units(){
-    int select;
 uni:std::cout << "Desea calificar unidades?" << "\n"
             << "0." << "\t" << "No, no emplear unidades" << "\n"
             << "1." << "\t" << "Si, OPCIONALES sin calicar" << "\n"
             << "2." << "\t" << "Si, las unidades se calificaran" << std::endl;
     std::cin.ignore();
-    std::cin >> select;
-    if(select == 0){
+    std::cin >> unit_treatment;
+    if(unit_treatment == NO_UNITS){
         unit = "\n";
         unit_penalization = 0;
-        unit_treatment = NO_UNITS;
     }
-    else if(select == 1 || select == 2){
+    else if(unit_treatment == OPTIONAL_UNITS || unit_treatment == OBLIGATORY_UNITS){
         std::cout << "Ingrese la unidad" << "\n";
         std::getline(std::cin, unit);
         int optional;
@@ -117,20 +115,35 @@ op:     std::cout << "Unidades van a la derecha o izquierda?\n"
             std::cout << "Ingrese valores validos\n";
             goto op;
 
-        if(select == 2){
-            unit_treatment = OBLIGATORY_UNITS;
+        //If it is obligatory request penalization over answer
+        if(unit_treatment == OBLIGATORY_UNITS){
             std::cout << "Ingrese la penalizacion" << "\n"
                         << "(Penalizacion sobre la respuesta)" << std::endl;
                         //Not implemented the multiple option or string form
+                        //Because user inteface is terminal
+            std::cin >> unit_penalization;
         }
-        else
-            unit_treatment = OPTIONAL_UNITS;
     }
     else{
         std::cout << "ERROR: Ingrese una opcion valida" << "\n";
         goto uni;
     }
 }
+//Multiple Attempts
+void Question::set_multiple_attempts(){
+    std::string clue_buffer;
+    char error = 'y';
+    std::cout << "Ingrese la penalizacion por cada intento incorrecto\n"
+              << "(Valores porcentuales entre 0 y 100)" << std::endl;
+    std::cin.ignore();
+    std::cin >> attempt_penalization;
+    while(error == 'y'){
+        clue_buffer = feedback_function("pistas?\n(Estas se muestran cada que hay un intento fallido)", error);
+        if(clue_buffer != "\n")
+            clues.push(clue_buffer);
+    }
+}
+
 //Landmarks
 void Question::set_landmarks(){
     landmarks[0] = feedback_function("marcas");
