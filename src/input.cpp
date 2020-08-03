@@ -154,6 +154,7 @@ ret:std::cout << "Desea agregar " << feedback_type << "\n"
     }
     return feedback_return;
 }
+
 // function to split string into substrings on the 
 // basis of delimiter and return the substrings 
 // after split in a vector of strings

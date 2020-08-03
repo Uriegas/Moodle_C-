@@ -19,5 +19,6 @@ std::string read_question();
 std::queue<tokens> read_formula(std::string string);
 std::string current_date();
 std::string feedback_function(const std::string& feedback_type);
+std::string feedback_function(const std::string& feedback_type, char& error);
 std::vector<std::string> split_string(std::string str, char dl);
 #endif //INPUT_H
