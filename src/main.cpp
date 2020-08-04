@@ -11,7 +11,6 @@ int main() {
     Menu menu;
     int selected_question;
     int selected_action = menu.show_menu();
-
     /*
     if(selected_action == 0)
         return 0;
