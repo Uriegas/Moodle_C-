@@ -1,6 +1,5 @@
-#include "../include/input.h"
-#include "../include/question.h"
 #include "../include/exam.h"
+#include "../include/question.h"
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Author: Jesus Eduardo Uriegas Ibarra

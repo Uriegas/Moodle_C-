@@ -1,15 +1,15 @@
 add_library(
 	moodle_lib STATIC
 	input.h
-	exam.h
 	parser.h
 	question.h
 	dataset.h
+	exam.h
 	${PROJECT_SOURCE_DIR}/src/input.cpp
-	${PROJECT_SOURCE_DIR}/src/exam.cpp
 	${PROJECT_SOURCE_DIR}/src/parser.cpp
 	${PROJECT_SOURCE_DIR}/src/question.cpp
 	${PROJECT_SOURCE_DIR}/src/dataset.cpp
+	${PROJECT_SOURCE_DIR}/src/exam.cpp
 	)
 
 #add_library(

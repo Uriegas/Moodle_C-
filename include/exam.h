@@ -1,13 +1,10 @@
 #ifndef EXAM_H
 #define EXAM_H
-
-#include <iostream>
-#include <vector>
-#include <iostream>
 #include "../include/question.h"
 #include "../include/dataset.h"
 
 //Each time that we find a new wildcard in a question we create a new dataset
+class Exam;
 class Exam {
     public:
         Exam():number_of_questions(0){};
