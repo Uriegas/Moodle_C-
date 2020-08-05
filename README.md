@@ -39,7 +39,7 @@ Please do a little research on installing CMake projects before installing in an
 
 ## NOTES
 testing.sh is file in the main directory that is going to build from source and open the executable automatically. It only works on Linux.  
-
+Menu class should be called Exam, it is actually an object with teh characteistics of an exam.  
 This program make use of the lexer and parser functions in the following [repository](https://github.com/Uriegas/Lexer-Parser-in-Cpp) is better to prove the code before using the functions, it has not been fully tested yet.  
 
 ## FOR DEVELOPERS   

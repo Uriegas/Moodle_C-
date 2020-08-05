@@ -10,7 +10,7 @@
 enum TOLERANCE{RELATIVE = 1, NOMINAL, GEOMETRIC};
 enum DECIMAL_OR_SIGNIFICATIVE{DECIMAL = true, SIGNIFICATIVE = false};
 enum UNIT_TREATMENT{LEFT, RIGHT, NO_UNITS=0, OPTIONAL_UNITS, OBLIGATORY_UNITS, STRING_INPUT, MULTIPLE_OPTION};
-enum QUESTION_TYPE{CALCULATED, SIMPLE, MULTIPLE};
+enum QUESTION_TYPE{SIMPLE = 1, CALCULATED, MULTIPLE};
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Functions to modify the elements of this structures are defined in input.cpp file.
@@ -38,12 +38,11 @@ class Question
 private:
     //Background variables IMPORTANT
     std::vector<std::string> wildcards;
-    std::vector<std::set<float>> datasets;//A vector composed of sets of float values;
+    std::vector<std::vector<float>> datasets;//A vector composed of sets of float values;
     int question_type;
     //*******First Page*******
     //General
     int category;//Not implemented
-    std::string question_name;
     std::string question_text;
     int default_score;//Number of points for this question
     std::string general_feedback;
@@ -63,27 +62,21 @@ private:
 public:
     Question(int question_type)
         :category(1), default_score(1), unit_treatment(NO_UNITS), question_type(question_type), created("\n"){}
+    //*******General*******
+    void get_wildcards();
     //*******First Page*******
     void read_question_name();
     void read_question_text();
     void set_default_score(int score);
     void set_general_feedback();
     void set_answer(Answer answer);
-//    std::queue <tokens> read_formula(std::string string);
-//    std::ofstream generate_questions();//Not implemented
-//    void print_answer();
     void set_units();
-//    void set_tolerance(Answer& answer); //Not implemented 
-//    std::string feedback_function(const std::string& feedback_type);
-//    std::vector<std::string> string_variable_analizer(const std::string base);
-//    std::string current_date();
-//    std::vector<std::string> split_string(std::string str, char dl);
-//    float evaluate(std::queue<tokens> string, float lower, float upper);
     void set_multiple_attempts();
     void set_landmarks();
     //Created/Modified
     void time();
     //Public to print it
+    std::string question_name;
     std::string created;
     std::string last_modified;
 };

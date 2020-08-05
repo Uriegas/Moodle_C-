@@ -11,14 +11,17 @@ int main() {
     Menu menu;
     int selected_question;
     int selected_action = menu.show_menu();
-    /*
+
     if(selected_action == 0)
         return 0;
     else if(selected_action == 1)
         selected_question = menu.create_new_question();
-//    else
-        //Call function to edit an already set question
-
+    else{
+        std::cout<< "Current questions are:\n" << menu.questions << "Select one question\n";
+        std::cin >> selected_question;
+        menu.modify_question();
+    }
+/*
     switch (selected_question){
         case 1:
         {
@@ -43,8 +46,8 @@ int main() {
             cout << "ERROR: Aun ahi un error en lo que selecciono como pregunta" << endl;
             break;
         }
-    }
-    cout<< "Pregunta No. " << " guardada correctamente" << endl; //Ougth to implement number of question
+    }*/
+    cout<< "Pregunta No. " << selected_question << " guardada correctamente" << endl; //Ougth to implement number of question
     //After creating a question save it to a file.
     //Create class File, with methods for converting a class into a File in a database (.txt)
     //This part is not implemented yet
@@ -57,7 +60,7 @@ int main() {
     question.variables = teacher.string_variable_analizer(question.question_text);
     cout << "Ingrese la formula que se usara para calcular el resultado correcto: " << endl;
     formula = teacher.read_formula(question.answer_formula);
-    cout << formula << endl;*/
+    cout << formula << endl;
 
     //Instatiate classes about the question elemnts
     Question question(CALCULATED);

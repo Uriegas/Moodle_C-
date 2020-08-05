@@ -10,7 +10,7 @@
 enum TYPE {PRIVATE, SHARED};
 enum SYNC {OFF, ON};
 
-//Each wildcard has its won dataset
+//Each wildcard has its own dataset
 //Two options to add items: manual and moodle generated
 class Dataset{
     public:
