@@ -79,14 +79,6 @@ std::string read_question(){
 }
 
 
-//Reads from keyboard and saves to an string
-//ans converts it from infix to postifx notation
-//It returns a vector in postfix notation
-std::queue<tokens> read_formula(std::string string){
-    //Tokenize and parse the string
-    std::queue<tokens> postfix_formula = parser( lexer(string).vector );
-    return postfix_formula;
-}
 /*
 //Accepts the Answer strcuture
 //Modifies tolerance parameters

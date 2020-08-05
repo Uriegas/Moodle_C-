@@ -151,6 +151,15 @@ std::ostream& operator<<(std::ostream& out, std::vector<tokens>& vector_token){
         out << print_ID(vector_token[i].ID) << "\t" << vector_token[i].value << "\n";
 }
 
+//Reads from keyboard and saves to an string
+//ans converts it from infix to postifx notation
+//It returns a vector in postfix notation
+std::queue<tokens> read_formula(std::string string){
+    //Tokenize and parse the string
+    std::queue<tokens> postfix_formula = parser( lexer(string).vector );
+    return postfix_formula;
+}
+
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PARSER FUNCTION FUNCTIONS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 std::ostream& operator<<(std::ostream& output, std::queue<tokens> vector_token){

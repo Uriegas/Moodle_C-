@@ -35,5 +35,6 @@ void return_error(const int& err);
 
 std::ostream& operator<<(std::ostream& out, std::vector<tokens>& vector_token);
 std::ostream& operator<<(std::ostream& output, std::queue<tokens> vector_token);
+std::queue<tokens> read_formula(std::string string);
 
 #endif //PARSER_H
