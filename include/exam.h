@@ -2,6 +2,9 @@
 #define EXAM_H
 #include "../include/question.h"
 #include "../include/dataset.h"
+#include <iostream>
+#include <vector>
+#include <iostream>
 
 //Each time that we find a new wildcard in a question we create a new dataset
 class Exam;

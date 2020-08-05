@@ -4,9 +4,9 @@
 #include <string>
 #include <vector>
 #include <iterator>
-#include <bits/stdc++.h> 
 #include <math.h>
 #include <ctime>
+#include <algorithm>
 
 
 void deletespace(std::string &str);

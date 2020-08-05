@@ -1,7 +1,4 @@
 #include "../include/exam.h"
-#include <iostream>
-#include <vector>
-#include <iostream>
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Note: Implement an exit option later below line 14
 
