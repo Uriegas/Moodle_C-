@@ -80,7 +80,6 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
             std::string another_question = "y";
             while(another_question == "y" || another_question == "1"){
                 //Read answer input
-                std::cout << "Ingrese la formula de la respuesta correcta" << "\n";
                 //read_formula returns a postfix notation queue tokenized
                 answer.read_formula();
                 if(selected_question != MULTIPLE){

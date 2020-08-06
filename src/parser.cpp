@@ -534,7 +534,9 @@ std::queue <tokens> parser(std::vector <tokens> string){
         }
         //This is the interesting part
         else if( string[0].ID == FUNCTION || string[0].ID == OPERATOR ){
-            if(operations.top().ID == OPEN_PAR || operations.top().ID == OPEN_FUNC )
+            if(operations.empty())
+                operations.push(string[0]);
+            else if(operations.top().ID == OPEN_PAR || operations.top().ID == OPEN_FUNC )
                 operations.push(string[0]);
             //Same precedence pop from stack to the queue and pop from vector to the stack
             //Lower precedence pop from stack to the queue and pop from vector to the stack

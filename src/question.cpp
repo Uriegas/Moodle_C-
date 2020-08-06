@@ -3,8 +3,10 @@
 //Answer Class
 void Answer::read_formula(){
     std::string formula;
-err:std::getline(std::cin, formula);
     vector_error tokenized_string;//Save tokenized string with error
+err:std::cout << "Ingrese la formula de la respuesta correcta\n";
+    std::cin.ignore();
+    std::getline(std::cin, formula);
 
     tokenized_string = lexer(formula);
     if(tokenized_string.error != NOERROR){//If there is an error in the string print it
