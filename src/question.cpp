@@ -4,11 +4,14 @@
 void Answer::read_formula(){
     std::string formula;
     vector_error tokenized_string;//Save tokenized string with error
-err:std::cout << "Ingrese la formula de la respuesta correcta\n";
-    std::cin.ignore();
+err:tokenized_string.error = NOERROR;
+    formula.clear();
+    std::cout << "Ingrese la formula de la respuesta correcta:\n";
+    std::cout << std::flush;
     std::getline(std::cin, formula);
 
     tokenized_string = lexer(formula);
+    std::cout<< formula << "\t" << tokenized_string.error << "\n";
     if(tokenized_string.error != NOERROR){//If there is an error in the string print it
         return_error(tokenized_string.error);
         goto err;
@@ -103,20 +106,23 @@ uni:std::cout << "Desea calificar unidades?" << "\n"
     }
     else if(unit_treatment == OPTIONAL_UNITS || unit_treatment == OBLIGATORY_UNITS){
         std::cout << "Ingrese la unidad" << "\n";
+        std::cin.clear();
+        std::cin.ignore();
         std::getline(std::cin, unit);
-        int optional;
+        int optional=0;
 op:     std::cout << "Unidades van a la derecha o izquierda?\n"
                 << "1." << "\t" << "Derecha, como 100km, cm, m" << "\n"
-                << "2." << "\t" << "Izquierda, como $100" << std::endl;
+                << "2." << "\t" << "Izquierda, como $100\n";
+        std::cin.clear();
         std::cin >> optional;
         if(optional == 1)
             unit_side = RIGHT;
         else if(optional == 2)
             unit_side = LEFT;
-        else
+        else{
             std::cout << "Ingrese valores validos\n";
             goto op;
-
+        }
         //If it is obligatory request penalization over answer
         if(unit_treatment == OBLIGATORY_UNITS){
             std::cout << "Ingrese la penalizacion" << "\n"
@@ -149,7 +155,8 @@ void Question::set_multiple_attempts(){
 //Landmarks
 void Question::set_landmarks(){
     landmarks[0] = feedback_function("marcas");
-    landmarks = split_string(landmarks[0], ' ');
+    if(landmarks[0] != "\n")
+        landmarks = split_string(landmarks[0], ' ');
 }
 //Created/Modified
 void Question::time(){

@@ -81,6 +81,8 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
             while(another_question == "y" || another_question == "1"){
                 //Read answer input
                 //read_formula returns a postfix notation queue tokenized
+                std::cin.clear();
+                std::cin.ignore();
                 answer.read_formula();
                 if(selected_question != MULTIPLE){
                     std::cout << "Ingrese el tipo de tolerancia y despues el valor de la tolerancia" << "\n"
@@ -104,6 +106,8 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
             //This section is not included in the simple question format
 
             //<<<<<<<<<< Landmark Section >>>>>>>>>>>>>>>
+            std::cin.clear();
+            std::cin.ignore();
             question.set_landmarks();
 
             //<<<<<<<<<< Created/Last Change Section >>>>>>>>>>>>>>>
