@@ -146,10 +146,27 @@ void Exam::modify_question(const int& selected_question){
 }
 */
 void Exam::load_question(std::string file){
-    std::ofstream myfile;
-    myfile.open(file);
-    myfile << "Writing to the file";
-    myfile.close();
+    struct Mydata{
+        std::string myname;
+        int myage;
+        std::string state;
+        float avg;
+    };
+    Mydata me;
+    std::ifstream myfile;
+/*    std::string buffer;
+    myfile.open(file, std::ios::in);
+    if(!myfile)
+        std::cout << "No se pudo abrir el archivo\nIntente subir un archivo valido\n";
+    else{
+        /*while(std::getline(myfile, buffer, '\n')){
+            myfile >> buffer;
+            std::stringstream(buffer) >> me.myname;
+        }*/
+        myfile >> me.myname >> me.myage >> me.state >> me.avg;
+        myfile.close();
+        std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
+    }
 }
 //Print questions in a list
 std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions){
