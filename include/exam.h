@@ -10,14 +10,13 @@
 class Exam;
 class Exam {
     public:
-        Exam():number_of_questions(0){};
+        Exam(){};
         int show_exam();
         Question create_new_question();
-        void modify_question(const int& selected_question);//Return exit or failure
+//        void modify_question(const int& selected_question);//Return exit or failure
         void add_dataset(Dataset& dataset);
         std::vector<Question> questions;
     private:
-        int number_of_questions; //Increments each time that a new question is created 
         std::vector<Dataset> datasets;
 };
 std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions);

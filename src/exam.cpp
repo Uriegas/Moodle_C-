@@ -11,12 +11,12 @@ int Exam::show_exam(){
     int agregar_editar;
     std::cout << "\t" << "MOODLE" << "\t" << "\n"
             << "Interfaz para crear un examen" << "\n"
-            << "Este examen tiene " << number_of_questions << " pregutas" << std::endl; 
+            << "Este examen tiene " << questions.size() << " pregutas" << std::endl; 
 agr:std::cout << "Desea agregar o editar preguntas?" << "\n"
             << "(Ingrese el numero)" << "\n"
             << "0." << "\t" << "Salir de MOODLE" << "\n"
-            << "1." << "\t" << "Agregar" << "\n"
-            << "2." << "\t" << "Editar" << std::endl;
+            << "1." << "\t" << "Agregar" << "\n";
+//            << "2." << "\t" << "Editar" << std::endl;
     std::cin >> agregar_editar;
 
     if(agregar_editar == 0){
@@ -24,9 +24,9 @@ agr:std::cout << "Desea agregar o editar preguntas?" << "\n"
     }
     else if(agregar_editar == 1){
         return 1;//Call function select_question_type in main.cpp
-    }
+    }/*
     else if(agregar_editar == 2){
-        if(number_of_questions == 0){
+        if(questions.empty()){
             std::cout << "ERROR: No puede editar preguntas, ya que no hay" << std::endl;
             goto agr;
         }
@@ -34,7 +34,7 @@ agr:std::cout << "Desea agregar o editar preguntas?" << "\n"
             //std::cout << "Que pregunta desea editar? " << std::endl;
             return 2;
         }
-    }
+    }*/
     else{
         std::cout << "ERROR: Ingrese un valor valido" << std::endl;
         goto agr;
@@ -125,7 +125,7 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
         return question;
     }
 }
-
+/*
 void Exam::modify_question(const int& selected_question){
     //Imprimir configuracion actual
     //Imprimir partes de la pregunta
@@ -134,6 +134,7 @@ void Exam::modify_question(const int& selected_question){
     //Para ello es necesario hacer una funcion de impresion, de configuarcin actual y de lo que se puede modificar, asi como la funcion del switch
     questions[selected_question];
 }
+*/
 //Print questions in a list
 std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions){
     for(int i = 1; i <= questions.size(); i++)
