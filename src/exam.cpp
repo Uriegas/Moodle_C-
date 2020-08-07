@@ -9,6 +9,7 @@
 //Returns 0 if it wants to exit
 int Exam::show_exam(){
     int agregar_editar;
+    std::string buffer;
     std::cout << "\t" << "MOODLE" << "\t" << "\n"
             << "Interfaz para crear un examen" << "\n"
             << "Este examen tiene " << questions.size() << " pregutas" << std::endl; 
@@ -19,34 +20,15 @@ agr:std::cout << "Opciones:" << "\n"
             << "2." << "\t" << "Subir pregunta desde archivo" << "\n"
             << "3." << "\t" << "Agregar pregunta" << "\n"
             << "4." << "\t" << "Agregar pregunta" << "\n";
-//            << "2." << "\t" << "Editar" << std::endl;
-    std::cin >> agregar_editar;
-    switch (agregar_editar){
-    case GET_OUT:
-        return GET_OUT;
-        break;
-
-    case CREATE_QUESTION:
-        return CREATE_QUESTION;
-        break;
-
-    case LOAD_QUESTION:
-        return LOAD_QUESTION;
-        break;
-
-    case PREVIEW_QUESTION:
-        return PREVIEW_QUESTION;
-        break;
-
-    case APPLY_EXAM:
-        return APPLY_EXAM;
-        break;
-
-    default:
+    std::cin.clear();
+    std::getline(std::cin, buffer);
+    std::stringstream(buffer) >> agregar_editar;
+    if(agregar_editar < 0 || agregar_editar > 4){
         std::cout << "ERROR: Ingrese un valor valido" << std::endl;
         goto agr;
-        break;
-    }/*
+    }
+    return agregar_editar;
+    /*
     if(agregar_editar == 0){
         return 0;
     }
@@ -163,6 +145,12 @@ void Exam::modify_question(const int& selected_question){
     questions[selected_question];
 }
 */
+void Exam::load_question(std::string file){
+    std::ofstream myfile;
+    myfile.open(file);
+    myfile << "Writing to the file";
+    myfile.close();
+}
 //Print questions in a list
 std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions){
     for(int i = 1; i <= questions.size(); i++)

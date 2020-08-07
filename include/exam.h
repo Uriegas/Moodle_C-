@@ -3,8 +3,10 @@
 #include "../include/question.h"
 #include "../include/dataset.h"
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 enum SELECT_OPTION { GET_OUT, CREATE_QUESTION, LOAD_QUESTION, PREVIEW_QUESTION, APPLY_EXAM };
 //Each time that we find a new wildcard in a question we create a new dataset
@@ -16,6 +18,7 @@ class Exam {
         Question create_new_question();
 //        void modify_question(const int& selected_question);//Return exit or failure
         void add_dataset(Dataset& dataset);
+        void load_question(std::string file);
         std::vector<Question> questions;
     private:
         std::vector<Dataset> datasets;
