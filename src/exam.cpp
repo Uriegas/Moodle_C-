@@ -154,19 +154,36 @@ void Exam::load_question(std::string file){
     };
     Mydata me;
     std::ifstream myfile;
-/*    std::string buffer;
+    std::string buffer;
+    std::vector<std::string> arr;
     myfile.open(file, std::ios::in);
-    if(!myfile)
+    if(myfile.fail())
         std::cout << "No se pudo abrir el archivo\nIntente subir un archivo valido\n";
     else{
-        /*while(std::getline(myfile, buffer, '\n')){
-            myfile >> buffer;
-            std::stringstream(buffer) >> me.myname;
-        }*/
-        myfile >> me.myname >> me.myage >> me.state >> me.avg;
-        myfile.close();
-        std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
+
+        while(!myfile.eof()){
+            std::getline(myfile, buffer, '\n');
+            arr.push_back(buffer);
+//            myfile >> buffer;
+//            std::stringstream(buffer) >> me.myname;
+        }
+//            std::stringstream(buffer) >> 
+//            std::cout << buffer << '\n';
+//Save to struct
+        me.myname = arr[0];
+        std::stringstream(arr[1]) >> me.myage;
+        me.state = arr[2];
+        std::stringstream(arr[3]) >> me.avg;
+        for(int i = 0; i < arr.size(); i++)
+        {
+            std::cout << arr[i] << '\n';
+        }
+        
     }
+//        myfile >> me.myname >> me.myage >> me.state >> me.avg;
+        myfile.close();
+        //Print
+        std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
 }
 //Print questions in a list
 std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions){
