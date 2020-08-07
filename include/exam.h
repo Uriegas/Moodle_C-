@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 
+enum SELECT_OPTION { GET_OUT, CREATE_QUESTION, LOAD_QUESTION, PREVIEW_QUESTION, APPLY_EXAM };
 //Each time that we find a new wildcard in a question we create a new dataset
 class Exam;
 class Exam {

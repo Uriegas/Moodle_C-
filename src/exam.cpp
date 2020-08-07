@@ -12,19 +12,47 @@ int Exam::show_exam(){
     std::cout << "\t" << "MOODLE" << "\t" << "\n"
             << "Interfaz para crear un examen" << "\n"
             << "Este examen tiene " << questions.size() << " pregutas" << std::endl; 
-agr:std::cout << "Desea agregar o editar preguntas?" << "\n"
+agr:std::cout << "Opciones:" << "\n"
             << "(Ingrese el numero)" << "\n"
             << "0." << "\t" << "Salir de MOODLE" << "\n"
-            << "1." << "\t" << "Agregar" << "\n";
+            << "1." << "\t" << "Agregar pregunta" << "\n"
+            << "2." << "\t" << "Subir pregunta desde archivo" << "\n"
+            << "3." << "\t" << "Agregar pregunta" << "\n"
+            << "4." << "\t" << "Agregar pregunta" << "\n";
 //            << "2." << "\t" << "Editar" << std::endl;
     std::cin >> agregar_editar;
+    switch (agregar_editar){
+    case GET_OUT:
+        return GET_OUT;
+        break;
 
+    case CREATE_QUESTION:
+        return CREATE_QUESTION;
+        break;
+
+    case LOAD_QUESTION:
+        return LOAD_QUESTION;
+        break;
+
+    case PREVIEW_QUESTION:
+        return PREVIEW_QUESTION;
+        break;
+
+    case APPLY_EXAM:
+        return APPLY_EXAM;
+        break;
+
+    default:
+        std::cout << "ERROR: Ingrese un valor valido" << std::endl;
+        goto agr;
+        break;
+    }/*
     if(agregar_editar == 0){
         return 0;
     }
     else if(agregar_editar == 1){
         return 1;//Call function select_question_type in main.cpp
-    }/*
+    }
     else if(agregar_editar == 2){
         if(questions.empty()){
             std::cout << "ERROR: No puede editar preguntas, ya que no hay" << std::endl;
@@ -34,11 +62,11 @@ agr:std::cout << "Desea agregar o editar preguntas?" << "\n"
             //std::cout << "Que pregunta desea editar? " << std::endl;
             return 2;
         }
-    }*/
+    }
     else{
         std::cout << "ERROR: Ingrese un valor valido" << std::endl;
         goto agr;
-    }
+    }*/
 }
 
 //Function to select a question type

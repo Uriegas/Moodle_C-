@@ -22,6 +22,12 @@ int main() {
         }
         std::cout << "Este examen no tiene preguntas";
 //        exam.modify_question();
+0. Get out of moodle
+1. Create question
+2. Load a question from file
+3. Preview a question
+4. Answer current exam
+
     }*/
     std::cout<< "Pregunta No. " << exam.questions.size() << " guardada correctamente" << std::endl; //Ougth to implement number of question
     //After creating a question save it to a file.
