@@ -106,13 +106,17 @@ std::string current_date(){
 std::string feedback_function(const std::string& feedback_type){
     char* retro = new char;
     std::string feedback_return;
+    std::string str;
 ret:std::cout << "Desea agregar " << feedback_type << "\n"
             << "y = si" << "\n"
             << "n = no" << "\n";
-    std::cin >> *retro;
+    std::getline(std::cin, str);
+    std::stringstream(str) >> *retro;
+
     if((*retro) == 'y'){
         std::cout << "Ingrese la(s) " << feedback_type << "\n";
-        std::cin.ignore();
+        std::cin.clear();
+        std::cin.ignore(10, '\n');
         std::getline(std::cin, feedback_return);
     }
     else if((*retro) == 'n'){
@@ -150,13 +154,13 @@ ret:std::cout << "Desea agregar " << feedback_type << "\n"
 // function to split string into substrings on the 
 // basis of delimiter and return the substrings 
 // after split in a vector of strings
-std::vector<std::string> split_string(std::string str, char dl){
+std::vector<std::string> split_string( std::string str, const char dl){
     std::string word = ""; 
     // to count the number of split strings 
     int num = 0; 
     // adding delimiter character at the end 
     // of 'str' 
-    str = str + dl; 
+    str += dl;
     // length of 'str' 
     int l = str.size(); 
     // traversing 'str' from left to right 

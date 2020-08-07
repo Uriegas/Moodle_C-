@@ -42,7 +42,10 @@ void Answer::set_decimal(){
     int decimal;
     std::string choose;
 ag: std::cout << "Ingrese la cantidad de decimales o cifras significativas a mostrar" << "\n";
+    std::cin.clear();
+    std::cin.ignore(1, '\n');
     std::cin >> decimal;
+    std::cout << decimal;
     if(decimal < 0){
         std::cout << "Ingrese un valor valido" << "\n";
         goto ag;
@@ -154,9 +157,10 @@ void Question::set_multiple_attempts(){
 
 //Landmarks
 void Question::set_landmarks(){
-    landmarks[0] = feedback_function("marcas");
-    if(landmarks[0] != "\n")
-        landmarks = split_string(landmarks[0], ' ');
+    std::string temp = feedback_function("marcas");
+    std::cout << temp;
+    if(temp != "\n")
+        landmarks = split_string(temp, ' ');
 }
 //Created/Modified
 void Question::time(){

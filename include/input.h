@@ -7,7 +7,7 @@
 #include <math.h>
 #include <ctime>
 #include <algorithm>
-
+#include <sstream>
 
 void deletespace(std::string &str);
 std::vector<std::string> string_variable_analizer(const std::string base);
