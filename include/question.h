@@ -35,7 +35,7 @@ struct Answer {
 
 class Question
 {//Comments specifies the sections found in Moodle
-private:
+public:
     //Background variables IMPORTANT
     std::vector<std::string> wildcards;
     std::vector<std::vector<float>> datasets;//A vector composed of sets of float values;
@@ -59,7 +59,6 @@ private:
     //Landmarks
     std::vector<std::string> landmarks;
 
-public:
     Question(int question_type)
         :category(1), default_score(1), unit_treatment(NO_UNITS), question_type(question_type), created("\n"){}
     //*******General*******
@@ -81,4 +80,17 @@ public:
     std::string last_modified;
 };
 
+//Print wildcards
+std::ostream& operator<<(std::ostream& out, const std::vector<std::string>& wildcards);
+//Print dataset
+std::ostream& operator<<(std::ostream& out, const std::vector<std::vector<float>>& datasets);
+//Print answer
+std::ostream& operator<<(std::ostream& out, const std::vector<Answer>& answers);
+//Print clues
+std::ostream& operator<<(std::ostream& out, std::queue <std::string> clues);
+//Print landmarks: Use wildcards function
+//Print question configuration
+//void print_question(Question question);
+std::ostream& operator<<(std::ostream& out, Question& question);
+//std::ostream& operator<<(std::ostream& out, Question& question);
 #endif

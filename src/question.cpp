@@ -168,3 +168,78 @@ void Question::time(){
         created = current_date();
     last_modified = current_date();
 }
+
+//************************************************PRINT FUNCTIONS************************************************
+//Print wildcards
+std::ostream& operator<<(std::ostream& out, const std::vector<std::string>& wildcards){
+    for(int i = 0; i < wildcards.size(); i++)
+        out << wildcards[i];
+    return out;
+}
+//Print dataset
+//It prints them in a list, ougth to implement matrix printing
+std::ostream& operator<<(std::ostream& out, const std::vector<std::vector<float>>& datasets){
+    for(int i = 0; i < datasets.size(); i++)
+        for(int j = 0; j < datasets[i].size(); j++)
+            out << datasets[i][j];
+    return out;
+}
+//Print answer
+std::ostream& operator<<(std::ostream& out, const std::vector<Answer>& answers){
+    for(int i = 0; i < answers.size(); i++){
+        out << "Pregunta Numero: " << i << '\n'
+            << answers[i].answer_formula << '\n'
+            << answers[i].calification << '\n'
+            << answers[i].tolerance << '\n'
+            << answers[i].tolerance_type << '\n'
+            << answers[i].number_of_decimals << '\n'
+            << answers[i].decimal_or_significative << '\n'
+            << answers[i].specific_feedback << '\n';
+    }
+    return out;
+}
+//Print clues
+std::ostream& operator<<(std::ostream& out, std::queue <std::string> clues){
+    int i = 0;
+    while(!clues.empty()){
+        out << "Clue: " << i++ << clues.front() << "\n";
+        clues.pop();
+    }
+    return out;
+}
+void print_question(Question question){
+    std::cout << question.question_type << '\n'
+        << question.question_name << '\n'
+        << question.question_text << '\n'
+        << question.default_score << '\n'
+        << question.general_feedback << '\n'
+        << question.answers << '\n'//overload << operator for vector of answers
+        << question.unit_treatment << '\n'
+        << question.unit_side << '\n'
+        << question.unit << '\n'
+        << question.unit_penalization << '\n'
+        << question.attempt_penalization << '\n'
+        << question.clues << '\n'//Overflow
+        << question.landmarks << '\n'
+        << question.created << '\n'
+        << question.last_modified << '\n';
+}
+//Print question configuration
+std::ostream& operator<<(std::ostream& out, Question& question){
+    out << question.question_type << '\n'
+        << question.question_name << '\n'
+        << question.question_text << '\n'
+        << question.default_score << '\n'
+        << question.general_feedback << '\n'
+        << question.answers << '\n'//overload << operator for vector of answers
+        << question.unit_treatment << '\n'
+        << question.unit_side << '\n'
+        << question.unit << '\n'
+        << question.unit_penalization << '\n'
+        << question.attempt_penalization << '\n'
+        << question.clues << '\n'//Overflow
+        << question.landmarks << '\n'
+        << question.created << '\n'
+        << question.last_modified << '\n';
+    return out;
+}

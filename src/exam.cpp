@@ -164,30 +164,27 @@ void Exam::load_question(std::string file){
         while(!myfile.eof()){
             std::getline(myfile, buffer, '\n');
             arr.push_back(buffer);
-//            myfile >> buffer;
-//            std::stringstream(buffer) >> me.myname;
         }
-//            std::stringstream(buffer) >> 
-//            std::cout << buffer << '\n';
 //Save to struct
         me.myname = arr[0];
         std::stringstream(arr[1]) >> me.myage;
         me.state = arr[2];
         std::stringstream(arr[3]) >> me.avg;
+        //Print array
         for(int i = 0; i < arr.size(); i++)
         {
             std::cout << arr[i] << '\n';
         }
+        std::cout << "\n";
         
     }
-//        myfile >> me.myname >> me.myage >> me.state >> me.avg;
-        myfile.close();
-        //Print
-        std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
+    myfile.close();
+    //Print struct
+    std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
 }
-//Print questions in a list
+//Print exam (all questions) in a list
 std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions){
-    for(int i = 1; i <= questions.size(); i++)
-        out << (i) << "\t" << questions[i-1].question_name << "\n";
+    for(int i = 0; i < questions.size(); i++)
+        out << questions[i];
     return out;
 }
