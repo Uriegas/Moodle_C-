@@ -75,6 +75,7 @@ public:
     void set_landmarks();
     //Created/Modified
     void time();
+    void apply_question();
     //Public to print it
     std::string question_name;
     std::string created;

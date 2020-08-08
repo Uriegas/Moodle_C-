@@ -267,3 +267,21 @@ std::ostream& operator<<(std::ostream& out, Question& question){
         //Ignored dataset and wildcards variables
     return out;
 }
+
+//Reads current question config and performs an operation
+void Question::apply_question(){
+    //This function dependes on datasets
+    //There are 3 types of applications
+    std::string buf;
+    float user_answer;
+
+    std::cout << question_text;
+    if(question_type == SIMPLE || question_type == CALCULATED){
+        std::cout << answers;
+        std::getline(std::cin, buf);
+        std::stringstream(buf) >> user_answer;
+    }
+    else if(question_type == MULTIPLE){
+        int user_answer;
+    }
+}
