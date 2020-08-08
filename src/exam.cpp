@@ -167,3 +167,10 @@ std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions){
         out << questions[i];
     return out;
 }
+
+void Exam::print_question_list(){
+    std::cout << "Lista de Preguntas en el Examen Actual\n";
+    for(int i = 0; i < questions.size(); i++)
+        std::cout << "Pregunta No. " << (i+1) << '\t' << questions[i].question_name << '\n';
+    std::cout << '\n';
+}

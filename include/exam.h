@@ -19,6 +19,7 @@ class Exam {
 //        void modify_question(const int& selected_question);//Return exit or failure
         void add_dataset(Dataset& dataset);
         void load_question(std::string file);
+        void print_question_list();
         std::vector<Question> questions;
     private:
         std::vector<Dataset> datasets;

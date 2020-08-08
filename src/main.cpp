@@ -32,7 +32,7 @@ int main() {
         }
 
         case PREVIEW_QUESTION:
-            return PREVIEW_QUESTION;
+            exam.print_question_list();
             break;
 
         case APPLY_EXAM:
