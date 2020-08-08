@@ -24,7 +24,7 @@ agr:std::cout << "Opciones:" << "\n"
     std::cin.clear();
     std::getline(std::cin, buffer);
     std::stringstream(buffer) >> agregar_editar;
-    if(agregar_editar < 0 || agregar_editar > 4){
+    if(agregar_editar < 0 || agregar_editar > 5){
         std::cout << "ERROR: Ingrese un valor valido" << std::endl;
         goto agr;
     }
