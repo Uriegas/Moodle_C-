@@ -158,8 +158,8 @@ void Question::set_multiple_attempts(){
 //Landmarks
 void Question::set_landmarks(){
     std::string temp = feedback_function("marcas");
-    std::cout << temp;
     if(temp != "\n")
+    std::cout << temp;
         landmarks = split_string(temp, ' ');
 }
 //Created/Modified
@@ -167,6 +167,37 @@ void Question::time(){
     if(created == "\n")
         created = current_date();
     last_modified = current_date();
+}
+
+//Convert temporary vector to Question data type
+void vector_to_question(std::vector<std::string>& arr, Question& question){
+    std::stringstream(arr[0]) >> question.question_type;
+    question.question_name = arr[1];
+    question.question_text = arr[2];
+    std::stringstream(arr[3]) >> question.default_score;
+    question.general_feedback = arr[4];
+
+    //Save answer
+    Answer ans;
+    ans.answer_formula = parser(lexer(arr[5]).vector);
+    std::stringstream(arr[6]) >> ans.calification;
+    std::stringstream(arr[7]) >> ans.tolerance;
+    std::stringstream(arr[8]) >> ans.tolerance_type;
+    std::stringstream(arr[9]) >> ans.number_of_decimals;
+    std::stringstream(arr[10]) >> ans.decimal_or_significative;
+    ans.specific_feedback = arr[11];
+    //Push answer into vector of answers
+    question.answers.push_back(ans);
+
+    std::stringstream(arr[12]) >> question.unit_treatment;
+    std::stringstream(arr[13]) >> question.unit_side;
+    question.unit = arr[14];
+    std::stringstream(arr[15]) >> question.unit_penalization;
+    std::stringstream(arr[16]) >> question.attempt_penalization;
+    question.clues.push(arr[17]);//Currently it only supports one clue
+    question.landmarks = split_string(arr[18], ' ');
+    question.created = arr[19];
+    question.last_modified = arr[20];
 }
 
 //************************************************PRINT FUNCTIONS************************************************
@@ -207,6 +238,7 @@ std::ostream& operator<<(std::ostream& out, std::queue <std::string> clues){
     }
     return out;
 }
+/*
 void print_question(Question question){
     std::cout << question.question_type << '\n'
         << question.question_name << '\n'
@@ -223,7 +255,7 @@ void print_question(Question question){
         << question.landmarks << '\n'
         << question.created << '\n'
         << question.last_modified << '\n';
-}
+}*/
 //Print question configuration
 std::ostream& operator<<(std::ostream& out, Question& question){
     out << question.question_type << '\n'
@@ -241,5 +273,6 @@ std::ostream& operator<<(std::ostream& out, Question& question){
         << question.landmarks << '\n'
         << question.created << '\n'
         << question.last_modified << '\n';
+        //Ignored dataset and wildcards variables
     return out;
 }

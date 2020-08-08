@@ -18,8 +18,9 @@ agr:std::cout << "Opciones:" << "\n"
             << "0." << "\t" << "Salir de MOODLE" << "\n"
             << "1." << "\t" << "Agregar pregunta" << "\n"
             << "2." << "\t" << "Subir pregunta desde archivo" << "\n"
-            << "3." << "\t" << "Agregar pregunta" << "\n"
-            << "4." << "\t" << "Agregar pregunta" << "\n";
+            << "3." << "\t" << "Previsualizar pregunta" << "\n"
+            << "4." << "\t" << "Aplicar examen" << "\n"
+            << "5." << "\t" << "Visualizar configuracion actual" << "\n";
     std::cin.clear();
     std::getline(std::cin, buffer);
     std::stringstream(buffer) >> agregar_editar;
@@ -28,27 +29,6 @@ agr:std::cout << "Opciones:" << "\n"
         goto agr;
     }
     return agregar_editar;
-    /*
-    if(agregar_editar == 0){
-        return 0;
-    }
-    else if(agregar_editar == 1){
-        return 1;//Call function select_question_type in main.cpp
-    }
-    else if(agregar_editar == 2){
-        if(questions.empty()){
-            std::cout << "ERROR: No puede editar preguntas, ya que no hay" << std::endl;
-            goto agr;
-        }
-        else{
-            //std::cout << "Que pregunta desea editar? " << std::endl;
-            return 2;
-        }
-    }
-    else{
-        std::cout << "ERROR: Ingrese un valor valido" << std::endl;
-        goto agr;
-    }*/
 }
 
 //Function to select a question type
@@ -73,6 +53,7 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
         Question question(selected_question);
         //<<<<<<<<<< HERE is all the process of user interface (input from teacher) >>>>>>>>>>>>>>>
         //<<<<<<<<<< Question Section >>>>>>>>>>>>>>>
+        //This sections applies to the three types of questions
         std::cout << "Ingrese el nombre de la pregunta" << "\n";
         std::cin.ignore();
         question.read_question_name();
@@ -125,12 +106,8 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
             std::cout << "Pregunta creada en " << question.created << "\n"
                     << "Pregunta modifica en " << question.last_modified << "\n";
         }
-
         else if(selected_question == CALCULATED){}
-        else if(selected_question == MULTIPLE){}
-        else{
-            std::cout << "ERROR: Ingrese un numero de pregunta valido" <<std::endl;
-            goto que;
+        else{//Multiple Question -No need to prove it
         }
         return question;
     }
@@ -145,17 +122,14 @@ void Exam::modify_question(const int& selected_question){
     questions[selected_question];
 }
 */
+//Load question from a file to the exam
 void Exam::load_question(std::string file){
-    struct Mydata{
-        std::string myname;
-        int myage;
-        std::string state;
-        float avg;
-    };
-    Mydata me;
+    //Create temporary question data type
+    Question question;
     std::ifstream myfile;
     std::string buffer;
-    std::vector<std::string> arr;
+    std::vector<std::string> arr;//Saves data temporary to a vector
+
     myfile.open(file, std::ios::in);
     if(myfile.fail())
         std::cout << "No se pudo abrir el archivo\nIntente subir un archivo valido\n";
@@ -165,23 +139,28 @@ void Exam::load_question(std::string file){
             std::getline(myfile, buffer, '\n');
             arr.push_back(buffer);
         }
-//Save to struct
+        myfile.close();
+        //Save to struct
+        vector_to_question(arr, question);
+        /*
         me.myname = arr[0];
         std::stringstream(arr[1]) >> me.myage;
         me.state = arr[2];
         std::stringstream(arr[3]) >> me.avg;
-        //Print array
+        */
+        //Print temporary array
         for(int i = 0; i < arr.size(); i++)
-        {
             std::cout << arr[i] << '\n';
-        }
-        std::cout << "\n";
-        
+        std::cout << "\n---------------------------\n";
     }
-    myfile.close();
-    //Print struct
-    std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
+
+    //Print question data type
+    std::cout << question;
+    //Save question to the exam
+    questions.push_back(question);
+//    std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
 }
+
 //Print exam (all questions) in a list
 std::ostream& operator<<(std::ostream& out, std::vector<Question>& questions){
     for(int i = 0; i < questions.size(); i++)

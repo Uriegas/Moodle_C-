@@ -49,7 +49,7 @@ public:
     //Answers
     std::vector<Answer> answers;//A data structure to save the answers configuration
     //Units treatment
-    size_t unit_treatment;//Are units settled?
+    size_t unit_treatment;//Are units settled? No untis, Ooptioanl or Obligatory
     bool unit_side;//Are units on left or rigth side?
     std::string unit; //Ej. Meters, centimeters, feets, etc.
     float unit_penalization;//If bad unit input, then what percentage extract?
@@ -61,6 +61,7 @@ public:
 
     Question(int question_type)
         :category(1), default_score(1), unit_treatment(NO_UNITS), question_type(question_type), created("\n"){}
+    Question(){}//For use in file reading
     //*******General*******
     void get_wildcards();
     //*******First Page*******
@@ -80,6 +81,10 @@ public:
     std::string last_modified;
 };
 
+//Convert temporary vector to Question data type
+void vector_to_question(std::vector<std::string>& arr, Question& question);
+
+//************************************************PRINT FUNCTIONS************************************************
 //Print wildcards
 std::ostream& operator<<(std::ostream& out, const std::vector<std::string>& wildcards);
 //Print dataset

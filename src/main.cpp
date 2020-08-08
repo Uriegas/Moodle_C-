@@ -35,6 +35,10 @@ int main() {
     case APPLY_EXAM:
         return APPLY_EXAM;
         break;
+
+    case CURRENT_CONFIG:
+        std::cout << exam.questions;
+        break;
     }
 //    std::cout<< "Pregunta No. " << exam.questions.size() << " guardada correctamente" << std::endl; //Ougth to implement number of question
     exam.show_exam(); //Call again to continue the program until 0 is recieved
