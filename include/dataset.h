@@ -15,13 +15,12 @@ enum SYNC {OFF, ON};
 class Dataset{
     public:
     int dataset_size();
-    float get_random_number();
-    void add_number(const float& add);
-
+    float get_random_number();//Instantiate wildcard with this value
+    void add_number(const float& add);//Push an item to the data_set
 
     private:
     std::string wildcard;
-    bool type;//The type of data set
+    bool type;//The type of data set: private or shared
     bool syncronization;
     std::vector<float> data_set;
 };
