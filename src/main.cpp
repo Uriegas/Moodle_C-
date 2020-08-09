@@ -45,7 +45,7 @@ int main() {
         }
         case APPLY_EXAM:{
             std::string&& file = "datasets.txt";
-            exam.load_dataset(file, "Yo");
+            exam.load_dataset(file);
             break;
         }
         case CURRENT_CONFIG:

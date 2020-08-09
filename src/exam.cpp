@@ -112,16 +112,7 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
         return question;
     }
 }
-/*
-void Exam::modify_question(const int& selected_question){
-    //Imprimir configuracion actual
-    //Imprimir partes de la pregunta
-    //Que desea modificar
-    //Seleccionar con un switch lo que va a modificar llamando a la variable que modifica a eso
-    //Para ello es necesario hacer una funcion de impresion, de configuarcin actual y de lo que se puede modificar, asi como la funcion del switch
-    questions[selected_question];
-}
-*/
+
 //Load question from a file to the exam
 void Exam::load_question(std::string file){
     //Create temporary question data type
@@ -160,7 +151,7 @@ void Exam::load_question(std::string file){
     questions.push_back(question);
 }
 
-void Exam::load_dataset(std::string& file, std::string wildcard){
+void Exam::load_dataset(std::string& file){
     Dataset dataset;
     std::ifstream myfile;
     std::string buffer;
@@ -176,8 +167,6 @@ void Exam::load_dataset(std::string& file, std::string wildcard){
         //Load file to string
         while(!myfile.eof()){
             std::getline(myfile, buffer, '\n');
-            //arr.push_back(buffer);
-            std::cout << buffer << '\n';
             if(buffer == "Dataset\n" || counter == 0){
                 counter++;
                 continue;
@@ -220,14 +209,14 @@ void Exam::load_dataset(std::string& file, std::string wildcard){
                 counter++;
                 continue;
             }
-            else if(buffer == "End\n" || counter == 8){
+            else if(buffer == "End\n" || counter == 8){//Save to datasets vector
                 numbers+= buffer;
                 data.push_back(numbers);
-                //counter++;
-                //continue;
-                break;
-            }
-            else if (counter == 9){
+                dataset.vector_to_dataset(data, dataset);
+                datasets.push_back(dataset);
+                data.clear();
+                arr.clear();
+                numbers.clear();
                 counter = 0;
                 continue;
             }
@@ -237,19 +226,18 @@ void Exam::load_dataset(std::string& file, std::string wildcard){
             }
         }
         myfile.close();
-        //Save to struct
-        dataset.vector_to_dataset(data, dataset);
         //Print temporary array
+        /*
         for(int i = 0; i < data.size(); i++)
             std::cout << data[i] << '\n';
         std::cout << "\n---------------------------\n";
+        */
     }
-
     //Print question data type
-    dataset.print_dataset();
-//    std::cout << dataset;
-    //Save question to the exam
-    //datasets.push_back(dataset);
+    /*
+    for(int i = 0; i < datasets.size(); i++)
+        datasets[i].print_dataset();
+    */
 }
 
 //Print exam (all questions) in a list
