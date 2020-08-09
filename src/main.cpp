@@ -27,7 +27,7 @@ int main() {
             exam.load_question(file);
             break;
         }
-        case PREVIEW_QUESTION:
+        case PREVIEW_QUESTION:{
             exam.print_question_list();
             std::string&& buf = " ";
             int preview_question;
@@ -39,12 +39,15 @@ int main() {
                 std::cout << "Previsualizando pregunta no. " << preview_question << '\n';
                 exam.questions[preview_question-1].apply_question();//Apply selected question
             }
-            else
-                std::cout << "Esta pregunta no existe aun\nChao\n";
+            else{
+                std::cout << "Esta pregunta no existe aun\nChao\n";}
             break;
-        case APPLY_EXAM:
-            return APPLY_EXAM;
+        }
+        case APPLY_EXAM:{
+            std::string&& file = "datasets.txt";
+            exam.load_dataset(file, "Yo");
             break;
+        }
         case CURRENT_CONFIG:
             std::cout << exam.questions;
             break;

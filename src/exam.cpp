@@ -158,7 +158,98 @@ void Exam::load_question(std::string file){
     std::cout << question;
     //Save question to the exam
     questions.push_back(question);
-//    std::cout << me.myname << '\n' << me.myage << '\n' << me.state << '\n' << me.avg << '\n';
+}
+
+void Exam::load_dataset(std::string& file, std::string wildcard){
+    Dataset dataset;
+    std::ifstream myfile;
+    std::string buffer;
+    std::vector<std::string> data;//Saves data temporary to a vector
+    std::vector<std::string> arr;
+    std::string numbers;
+    int counter = 0;
+    myfile.open(file, std::ios::in);
+
+    if(myfile.fail())
+        std::cout << "Error abriendo el archivo datasets.txt\nAsegurese de que no lo haya borrado\n";
+    else{
+        //Load file to string
+        while(!myfile.eof()){
+            std::getline(myfile, buffer, '\n');
+            //arr.push_back(buffer);
+            std::cout << buffer << '\n';
+            if(buffer == "Dataset\n" || counter == 0){
+                counter++;
+                continue;
+            }
+            else if(counter == 1){//Save wildcard
+                arr = split_string(buffer, ' ');
+                data.push_back(arr[1]);
+                counter ++;
+                continue;
+            }
+            else if(counter == 2){//Save type 
+                arr = split_string(buffer, ' ');
+                if(arr[1] == "PRIVATE"){
+                    data.push_back("0");
+                }
+                else if(arr[1] == "SHARED"){
+                    data.push_back("1");
+                }
+                else
+                    break;
+                counter++;
+                continue;
+            }
+            else if(counter == 3){//Save syncronization
+                arr = split_string(buffer, ' ');
+                if(arr[1] == "OFF"){
+                    data.push_back("0");
+                }
+                else if(arr[1] == "ON"){
+                    data.push_back("1");
+                }
+                else
+                    break;
+                counter++;
+                continue;
+            }
+            else if(counter == 4 || counter == 5 || counter == 6 ||
+                    counter == 6 || counter == 7){//Save values of dataset
+                numbers += buffer;
+                counter++;
+                continue;
+            }
+            else if(buffer == "End\n" || counter == 8){
+                numbers+= buffer;
+                data.push_back(numbers);
+                //counter++;
+                //continue;
+                break;
+            }
+            else if (counter == 9){
+                counter = 0;
+                continue;
+            }
+            else{
+                std::cout << "Estructura invalida\n";
+                break;
+            }
+        }
+        myfile.close();
+        //Save to struct
+        dataset.vector_to_dataset(data, dataset);
+        //Print temporary array
+        for(int i = 0; i < data.size(); i++)
+            std::cout << data[i] << '\n';
+        std::cout << "\n---------------------------\n";
+    }
+
+    //Print question data type
+    dataset.print_dataset();
+//    std::cout << dataset;
+    //Save question to the exam
+    //datasets.push_back(dataset);
 }
 
 //Print exam (all questions) in a list
@@ -173,4 +264,15 @@ void Exam::print_question_list(){
     for(int i = 0; i < questions.size(); i++)
         std::cout << "Pregunta No. " << (i+1) << '\t' << questions[i].question_name << '\n';
     std::cout << '\n';
+}
+
+void Exam::apply_exam(){
+    if(questions.empty())
+        std::cout << "Error: No hay preguntas cargadas en el examen";
+    else{
+        for(int i = 0; i < questions.size(); i++){
+            calification += questions[i].apply_question();
+        }
+        calification/questions.size();
+    }
 }

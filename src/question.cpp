@@ -248,6 +248,7 @@ std::ostream& operator<<(std::ostream& out, std::queue <std::string> clues){
 }
 
 //Print question configuration
+//This has to be updated when question class is finished
 std::ostream& operator<<(std::ostream& out, Question& question){
     out << question.question_type << '\n'
         << question.question_name << '\n'
@@ -269,7 +270,8 @@ std::ostream& operator<<(std::ostream& out, Question& question){
 }
 
 //Reads current question config and performs an operation
-void Question::apply_question(){
+//Returns de result of the operation
+float Question::apply_question(){
     //This function dependes on datasets
     //There are 3 types of applications
     std::string buf;
