@@ -16,8 +16,9 @@ err:tokenized_string.error = NOERROR;
         return_error(tokenized_string.error);
         goto err;
     }
-    else//If there is no error parse the string and save it to Answer object
-        answer_formula = parser(tokenized_string.vector);
+    else//If there is no error accept the string
+        this->formula = formula;
+//        answer_formula = parser(tokenized_string.vector);
 }
 
 float Answer::string_to_formula(std::string formula){
@@ -193,7 +194,8 @@ void vector_to_question(std::vector<std::string>& arr, Question& question){
 
     //Save answer
     Answer ans;
-    ans.answer_formula = parser(lexer(arr[5]).vector);
+    ans.formula =  arr[5];
+//    ans.answer_formula = parser(lexer(arr[5]).vector);
     std::stringstream(arr[6]) >> ans.calification;
     std::stringstream(arr[7]) >> ans.tolerance;
     std::stringstream(arr[8]) >> ans.tolerance_type;
@@ -264,7 +266,7 @@ std::ostream& operator<<(std::ostream& out, const std::vector<std::vector<float>
 std::ostream& operator<<(std::ostream& out, const std::vector<Answer>& answers){
     for(int i = 0; i < answers.size(); i++){
         out << "Pregunta Numero: " << i << '\n'
-            << answers[i].answer_formula << '\n'
+            << answers[i].formula << '\n'
             << answers[i].calification << '\n'
             << answers[i].tolerance << '\n'
             << answers[i].tolerance_type << '\n'

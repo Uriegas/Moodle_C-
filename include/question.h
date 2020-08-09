@@ -26,7 +26,8 @@ struct Answer {
         void set_decimal();
         void set_specific_feedback();
         float string_to_formula(std::string formula);
-        std::queue <tokens> answer_formula;
+        float result;
+        std::string formula;
         size_t calification;//Specified in percentage 0-100%
         float tolerance;
         unsigned int tolerance_type;

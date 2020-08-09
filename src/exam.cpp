@@ -290,9 +290,10 @@ void Exam::apply_question(int& no_que){
             if(questions[no_que].wildcards[i] == datasets[j].wildcard)
                 inst_wild.push_back(datasets[j].get_random_number());
 
-    //Replace wildacards in question text by the instantiated ones
+    //Replace wildacards in question text and formula of answer by the instantiated ones
     for(int i = 0; i < inst_wild.size(); i++){
         ReplaceStringInPlace(questions[no_que].question_text, '{'+questions[no_que].wildcards[i]+'}', inst_wild[i]);
+        ReplaceStringInPlace(questions[no_que].answers[0].formula, '{'+questions[no_que].wildcards[i]+'}', inst_wild[i]);
     }
 
     //Get string formula for specific and general feedback
@@ -319,7 +320,20 @@ void Exam::apply_question(int& no_que){
     ReplaceStringInPlace(questions[no_que].general_feedback, '[' + formulas_to_replace[0] + ']', std::to_string(result_of_formulas[0]));
     ReplaceStringInPlace(questions[no_que].answers[0].specific_feedback, '[' + formulas_to_replace[1] + ']', std::to_string(result_of_formulas[1]));
 
+    //Convert the string formula in the answer into a result instantiaded by the wildcards
+    for(int j = 0; j < questions[no_que].wildcards.size(); j++)//Iterate over each wildcard
+        ReplaceStringInPlace(questions[no_que].answers[0].formula, '{' + questions[no_que].wildcards[j] + '}', inst_wild[j]);
+    questions[no_que].answers[0].result = questions[no_que].answers[0].string_to_formula(questions[no_que].answers[0].formula);
+
+    std::string buffer;
+    float user_ans;
     std::cout << questions[no_que].question_text << '\n';
-    std::cout << questions[no_que].general_feedback << '\n';
-    std::cout << questions[no_que].answers[0].specific_feedback << '\n';
+    std::cin.clear();
+    std::getline(std::cin, buffer);
+    std::stringstream(buffer) >> user_ans;
+    std::cout << user_ans << '\n';
+    std::cout << questions[no_que].answers[0].result << '\n';
+    std::cout << "Retroalimentacion General: " << questions[no_que].general_feedback << '\n';
+    std::cout << "Retroalimentacion Especifica: " << questions[no_que].answers[0].specific_feedback << '\n';
 }
+//Modularize apply question function
