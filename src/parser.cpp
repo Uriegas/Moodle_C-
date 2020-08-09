@@ -314,7 +314,7 @@ std::vector <tokens> lexer_part_1(std::string string){
             else{
                 buffer+= string[i];
                 //This if is that we are finishing reading the real number, so lets store it
-                if( is_an_operator(string[i+1]) || is_a_separator(string[i+1]) || (string[i+1] == ')') ){
+                if( is_an_operator(string[i+1]) || is_a_separator(string[i+1]) || (string[i+1] == ')') || ((i+1) == string.size()) ){
                     current_token = {NUMBER, buffer};
                     tokenized_string.push_back(current_token);
                     buffer.clear();
@@ -592,7 +592,6 @@ float evaluate(std::queue<tokens> string, float lower, float upper){
         else
             result.push( compute(string.front().value) );
         string.pop();
-        std::cout << result.top() << '\n';
     }
     return result.top();
 }

@@ -183,3 +183,27 @@ std::vector<std::string> split_string( std::string str, const char dl){
     // return the splitted strings 
     return substr_list; 
 }
+
+//Returns a formula string
+//Note: Does not support error handling
+std::string find_formula_in_string(std::string str){
+    std::string formula;
+    bool formula_flag = false;
+    for(int i = 0; i < str.size(); i++){
+        if(str[i] == '['){//we are in the string
+            formula_flag = true;
+            continue;
+        }
+        else if( (formula_flag == true) && (str[i] != ']') ){
+            formula += str[i];
+            continue;
+        }
+        else if(str[i] == ']'){//We ended reading the formula
+            formula_flag = false;
+            break;
+        }
+        else
+            continue;
+    }
+    return formula;
+}

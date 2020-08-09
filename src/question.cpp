@@ -20,8 +20,13 @@ err:tokenized_string.error = NOERROR;
         answer_formula = parser(tokenized_string.vector);
 }
 
-void Answer::string_to_formula(std::string formula){
+float Answer::string_to_formula(std::string formula){
     vector_error tokenzed_string;
+    std::queue<tokens> ans;
+    tokenzed_string.error = NOERROR;
+    tokenzed_string = lexer(formula);
+    ans = parser(tokenzed_string.vector);
+    return evaluate(ans, 0, 10);
 
 }
 void Answer::set_tolerance(){
@@ -159,7 +164,7 @@ void Question::set_multiple_attempts(){
     while(error == 'y'){
         clue_buffer = feedback_function("pistas?\n(Estas se muestran cada que hay un intento fallido)", error);
         if(clue_buffer != "\n")
-            clues.push(clue_buffer);
+            clues.push_back(clue_buffer);
     }
 }
 
@@ -203,7 +208,7 @@ void vector_to_question(std::vector<std::string>& arr, Question& question){
     question.unit = arr[14];
     std::stringstream(arr[15]) >> question.unit_penalization;
     std::stringstream(arr[16]) >> question.attempt_penalization;
-    question.clues.push(arr[17]);//Currently it only supports one clue
+    question.clues.push_back(arr[17]);//Currently it only supports one clue
     question.landmarks = split_string(arr[18], ' ');
     question.created = arr[19];
     question.last_modified = arr[20];

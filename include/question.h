@@ -25,6 +25,7 @@ struct Answer {
         void set_tolerance();
         void set_decimal();
         void set_specific_feedback();
+        float string_to_formula(std::string formula);
         std::queue <tokens> answer_formula;
         size_t calification;//Specified in percentage 0-100%
         float tolerance;
@@ -56,7 +57,7 @@ public:
     float unit_penalization;//If bad unit input, then what percentage extract?
     //Multiple Attempts
     float attempt_penalization;//If incorrect answered, have another attempt but less calification
-    std::queue <std::string> clues; //Display everytime that fails an attempt
+    std::vector <std::string> clues; //Display everytime that fails an attempt
     //Landmarks
     std::vector<std::string> landmarks;
 

@@ -18,4 +18,5 @@ std::string current_date();
 std::string feedback_function(const std::string& feedback_type);
 std::string feedback_function(const std::string& feedback_type, char& error);
 std::vector<std::string> split_string(std::string str, char dl);
+std::string find_formula_in_string(std::string str);
 #endif //INPUT_H

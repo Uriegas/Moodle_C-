@@ -274,7 +274,14 @@ void Exam::apply_question(int& no_que){
     //2,    Instantiate wildcards
     //3.    Set cout and cin options (User interface)
     //4.    Evaluate input considering configuration
+    
+    //only simple question supported yet
     std::vector<std::string> inst_wild;
+    std::vector<std::string> formulas;
+    std::vector<std::string> formulas_to_replace;
+    std::vector<std::string> solved_formulas;
+    std::vector<float> result_of_formulas;
+
     srand(time(NULL));
     std::cout << "Previsualizando pregunta no. " << no_que+1 << '\n';
     //Find according dataset for each wildcard and instantate them in order
@@ -282,10 +289,37 @@ void Exam::apply_question(int& no_que){
         for(int j = 0; j < datasets.size(); j++)
             if(questions[no_que].wildcards[i] == datasets[j].wildcard)
                 inst_wild.push_back(datasets[j].get_random_number());
-    //Print instantated wildcard
-    for(int i = 0; i < inst_wild.size(); i++)
-        std::cout << inst_wild[i] << '\n';
-    for(int i = 0; i < inst_wild.size(); i++)
+
+    //Replace wildacards in question text by the instantiated ones
+    for(int i = 0; i < inst_wild.size(); i++){
         ReplaceStringInPlace(questions[no_que].question_text, '{'+questions[no_que].wildcards[i]+'}', inst_wild[i]);
-    std::cout << questions[no_que].question_text;
+    }
+
+    //Get string formula for specific and general feedback
+    //Saved in vector, IMPORTANT we know that the first two positions are fixed but clues not
+    formulas.push_back(find_formula_in_string(questions[no_que].general_feedback));
+    for(int i = 0; i < questions[no_que].answers.size(); i++)//Iterate over answers feedback to find the formulas in answeer
+        formulas.push_back(find_formula_in_string(questions[no_que].answers[i].specific_feedback));
+    formulas_to_replace = formulas;
+    /*//Dont implemnt clues 
+    for(int i = 0; i < questions[no_que].clues.size(); i++)
+        formulas.push_back(find_formula_in_string(questions[no_que].clues[i]));
+    */
+    //Now replace variables in formulas by a random number saved in instant_wildcards
+    for(int i = 0; i < formulas.size(); i++)//Iterate over each formula
+        for(int j = 0; j < questions[no_que].wildcards.size(); j++)//Iterate over each wildcard
+            ReplaceStringInPlace(formulas[i], '{' + questions[no_que].wildcards[j] + '}', inst_wild[j]);
+
+    //Instantiate all the formulas and save to another verctor
+    for(int i = 0; i < formulas.size(); i++){
+        result_of_formulas.push_back(questions[no_que].answers[0].string_to_formula(formulas[i]));
+//        result_of_formulas.push_back( evaluate(parser(lexer(formulas[i]).vector), 0, 1000) );
+    }
+    //Replace the result in every string that is going to be shown to the user
+    ReplaceStringInPlace(questions[no_que].general_feedback, '[' + formulas_to_replace[0] + ']', std::to_string(result_of_formulas[0]));
+    ReplaceStringInPlace(questions[no_que].answers[0].specific_feedback, '[' + formulas_to_replace[1] + ']', std::to_string(result_of_formulas[1]));
+
+    std::cout << questions[no_que].question_text << '\n';
+    std::cout << questions[no_que].general_feedback << '\n';
+    std::cout << questions[no_que].answers[0].specific_feedback << '\n';
 }
