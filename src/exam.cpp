@@ -2,6 +2,19 @@
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<COMMENTS SECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //Note: Implement an exit option later below line 14
 
+//Returns 1 or 0 if question is correct or not
+//This function evaluates tolerance
+int answer_correctness(float x, float t, int type_of_tolerance){
+    float dx = abs(x-t);
+    if(type_of_tolerance == NOMINAL)
+        return dx <= t ? 1 : 0;
+    else if(type_of_tolerance == RELATIVE)
+        return (dx/x) <= t ? 1 : 0;
+    else if(type_of_tolerance == GEOMETRIC)
+        return x/(1+t) <= (x+dx) <= x*(1+t) ? 1 : 0;
+    else
+        return -1;
+}
 
 //First user interface
 //Returns 2 if it edits a question
@@ -331,7 +344,9 @@ void Exam::apply_question(int& no_que){
     std::cin.clear();
     std::getline(std::cin, buffer);
     std::stringstream(buffer) >> user_ans;
-    std::cout << user_ans << '\n';
+    std::cout << "Su respuesta fue: " << user_ans << '\n';
+    std::cout << "La respuesta es " << (answer_correctness(user_ans, questions[no_que].answers[0].tolerance, 
+                 questions[no_que].answers[0].tolerance_type) == 1 ? "correcta" : "incorrecta") << '\n';
     std::cout << questions[no_que].answers[0].result << '\n';
     std::cout << "Retroalimentacion General: " << questions[no_que].general_feedback << '\n';
     std::cout << "Retroalimentacion Especifica: " << questions[no_que].answers[0].specific_feedback << '\n';
