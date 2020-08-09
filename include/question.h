@@ -2,6 +2,7 @@
 #define QUESTION_H
 #include "../include/parser.h"//Include the parser functions and structs
 #include "../include/input.h"//Include the parser functions and structs
+#include "../include/dataset.h"
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -33,7 +34,7 @@ struct Answer {
         std::string specific_feedback;
 };
 
-class Question
+struct Question
 {//Comments specifies the sections found in Moodle
 public:
     //Background variables IMPORTANT
@@ -75,8 +76,7 @@ public:
     void set_landmarks();
     //Created/Modified
     void time();
-    //Apply question Imporattnt function
-    float apply_question();
+    void apply(std::vector<Dataset>& datasets);
     //Public to print it
     std::string question_name;
     std::string created;

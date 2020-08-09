@@ -15,19 +15,19 @@ enum SYNC {OFF, ON};
 
 //Each wildcard has its own dataset
 //Two options to add items: manual and moodle generated
-class Dataset{
+struct Dataset{
     public:
     int dataset_size();
-    float get_random_number();//Instantiate wildcard with this value
-    void add_number(const float& add);//Push an item to the data_set
+    std::string get_random_number();//Instantiate wildcard with this value
+    void add_number(const std::string& add);//Push an item to the data_set
     void print_dataset();
     void vector_to_dataset(std::vector<std::string>& data, Dataset& dataset);
+    std::string get_wildcard();
 
-    private:
     std::string wildcard;
     bool type;//The type of data set: private or shared
     bool syncronization;
-    std::vector<float> datasets;
+    std::vector<std::string> datasets;
 };
 
 //std::ostream& operator<<(std::ostream& out, const Dataset& dataset);

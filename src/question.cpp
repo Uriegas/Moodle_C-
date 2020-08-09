@@ -20,6 +20,10 @@ err:tokenized_string.error = NOERROR;
         answer_formula = parser(tokenized_string.vector);
 }
 
+void Answer::string_to_formula(std::string formula){
+    vector_error tokenzed_string;
+
+}
 void Answer::set_tolerance(){
     size_t tole = 0;
     float type;
@@ -203,6 +207,35 @@ void vector_to_question(std::vector<std::string>& arr, Question& question){
     question.landmarks = split_string(arr[18], ' ');
     question.created = arr[19];
     question.last_modified = arr[20];
+    question.wildcards = string_variable_analizer(question.question_text);
+}
+void Question::apply(std::vector<Dataset>& datasets){
+    std::string buf;
+    float user_answer;
+    std::vector<std::string> wildcards_instantiated;
+    //1.    Fetch dataset
+    //2,    Instantiate wildcards
+    //3.    Set cout and cin options (User interface)
+    //4.    Evaluate input considering configuration
+
+    if(wildcards.empty())
+        std::cout << "Empty bro\n";
+    else{
+        std::cout << "It is not empty";
+    for(int i = 0; i < wildcards.size(); i++){//Instantiate each wildcard
+        for(int j = 0; j < datasets.size(); j++){//Find wildcard dataset
+            if (wildcards[i] == datasets[i].get_wildcard()){//If founded the current wildcard dataset
+                wildcards_instantiated[i] = datasets[i].get_random_number();
+            }
+            else
+                continue;
+        }
+    }
+
+    for(int i = 0; i < wildcards_instantiated.size(); i++)
+        ReplaceStringInPlace(question_text, '{' + wildcards[i] + '}', wildcards_instantiated[i]);
+    std::cout << question_text;
+    }
 }
 
 //************************************************PRINT FUNCTIONS************************************************
@@ -267,23 +300,4 @@ std::ostream& operator<<(std::ostream& out, Question& question){
         << question.last_modified << '\n';
         //Ignored dataset and wildcards variables
     return out;
-}
-
-//Reads current question config and performs an operation
-//Returns de result of the operation
-float Question::apply_question(){
-    //This function dependes on datasets
-    //There are 3 types of applications
-    std::string buf;
-    float user_answer;
-
-    std::cout << question_text;
-    if(question_type == SIMPLE || question_type == CALCULATED){
-        std::cout << answers;
-        std::getline(std::cin, buf);
-        std::stringstream(buf) >> user_answer;
-    }
-    else if(question_type == MULTIPLE){
-        int user_answer;
-    }
 }

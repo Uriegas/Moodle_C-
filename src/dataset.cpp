@@ -4,12 +4,11 @@ int Dataset::dataset_size(){
     return datasets.size();
 }
 
-float Dataset::get_random_number(){
-    srand(time(NULL));
+std::string Dataset::get_random_number(){
     return datasets[rand()%datasets.size()];
 }
 
-void Dataset::add_number(const float& add){
+void Dataset::add_number(const std::string& add){
     //If greater than max size pop an element
     while(datasets.size() >= MAX_SET_SIZE)
         datasets.pop_back();
@@ -29,7 +28,7 @@ void Dataset::print_dataset(){
 }
 
 void Dataset::vector_to_dataset(std::vector<std::string>& data, Dataset& dataset){
-    float number;
+    std::string number;
     std::stringstream(data[0]) >> dataset.wildcard;
     std::stringstream(data[1]) >> dataset.type;
     std::stringstream(data[2]) >> dataset.syncronization;
@@ -39,6 +38,10 @@ void Dataset::vector_to_dataset(std::vector<std::string>& data, Dataset& dataset
         dataset.datasets.push_back(number);
     }
 
+}
+
+std::string Dataset::get_wildcard(){
+    return wildcard;
 }
 /*
 std::ostream& operator<<(std::ostream& out, const Dataset& dataset){

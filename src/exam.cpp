@@ -259,8 +259,33 @@ void Exam::apply_exam(){
         std::cout << "Error: No hay preguntas cargadas en el examen";
     else{
         for(int i = 0; i < questions.size(); i++){
-            calification += questions[i].apply_question();
+            //calification += questions[i].apply_question();
         }
         calification/questions.size();
     }
+}
+//Reads current question config and performs an operation
+//Returns de result of the operation
+//no_que = number of question
+void Exam::apply_question(int& no_que){
+    //This function dependes on datasets
+    //There are 3 types of applications
+    //1.    Fetch dataset
+    //2,    Instantiate wildcards
+    //3.    Set cout and cin options (User interface)
+    //4.    Evaluate input considering configuration
+    std::vector<std::string> inst_wild;
+    srand(time(NULL));
+    std::cout << "Previsualizando pregunta no. " << no_que+1 << '\n';
+    //Find according dataset for each wildcard and instantate them in order
+    for(int i = 0; i < questions[no_que].wildcards.size(); i++)//Instantate variables
+        for(int j = 0; j < datasets.size(); j++)
+            if(questions[no_que].wildcards[i] == datasets[j].wildcard)
+                inst_wild.push_back(datasets[j].get_random_number());
+    //Print instantated wildcard
+    for(int i = 0; i < inst_wild.size(); i++)
+        std::cout << inst_wild[i] << '\n';
+    for(int i = 0; i < inst_wild.size(); i++)
+        ReplaceStringInPlace(questions[no_que].question_text, '{'+questions[no_que].wildcards[i]+'}', inst_wild[i]);
+    std::cout << questions[no_que].question_text;
 }

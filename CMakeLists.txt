@@ -8,7 +8,7 @@ project(moodle)
 #add_library()
 
 ##Debuging Symbols and Optimization Activated
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 add_subdirectory(include)
 ##Uncomment for Realese Mode and Comment above macro
 ##set(CMAKE_BUILD_TYPE Release)

@@ -35,9 +35,9 @@ int main() {
             std::cin.clear();
             std::getline(std::cin, buf);
             std::stringstream(buf) >> preview_question;
-            if( !(preview_question > exam.questions.size() || preview_question < 0) ){
-                std::cout << "Previsualizando pregunta no. " << preview_question << '\n';
-                exam.questions[preview_question-1].apply_question();//Apply selected question
+            if( !(preview_question > exam.questions.size() || preview_question < 1) ){
+                preview_question -= 1;
+                exam.apply_question(preview_question);
             }
             else{
                 std::cout << "Esta pregunta no existe aun\nChao\n";}
