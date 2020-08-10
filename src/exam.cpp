@@ -405,30 +405,52 @@ float Exam::apply_question(int& no_que){
     //Configure the current question
     questions[no_que].apply(inst_wild);
 
-    //Evaluate question already instantiated
+    //To use in user input and returning calification
     std::string buffer;
-    float user_ans;
     float calif;
-    std::cout << questions[no_que].question_text << '\n';
-    std::cin.clear();
-    std::getline(std::cin, buffer);
-    std::stringstream(buffer) >> user_ans;
-    std::cout << "Su respuesta fue " << user_ans << '\n'
-                << "La respuesta es ";
-    //Evaluate if the answer is correct
-    if(answer_correctness(user_ans, questions[no_que].answers[0].tolerance, 
-                 questions[no_que].answers[0].tolerance_type) == 1){
-                std::cout << "correcta\n" << "Retroalimentacion Especifica: " <<
-                questions[no_que].answers[0].specific_feedback << '\n';
-                calif = (float)(questions[no_que].answers[0].calification)/100*(float)questions[no_que].default_score;
+    if(questions[no_que].question_type == SIMPLE || questions[no_que].question_type == CALCULATED){
+        //Evaluate question already instantiated
+        float user_ans;
+        std::cout << questions[no_que].question_text << '\n';
+        std::cin.clear();
+        std::getline(std::cin, buffer);
+        std::stringstream(buffer) >> user_ans;
+        std::cout << "Su respuesta fue " << user_ans << '\n'
+                    << "La respuesta es ";
+        //Evaluate if the answer is correct
+        if(answer_correctness(user_ans, questions[no_que].answers[0].tolerance, 
+                    questions[no_que].answers[0].tolerance_type) == 1){
+                    std::cout << "correcta\n" << "Retroalimentacion Especifica: " <<
+                    questions[no_que].answers[0].specific_feedback << '\n';
+                    calif = (float)(questions[no_que].answers[0].calification)/100*(float)questions[no_que].default_score;
+        }
+        else{
+            std::cout << "incorrecta\n";
+            calif = 0;
+        }
+        std::cout << "La respuesta correcta es " << questions[no_que].answers[0].result << '\n';
     }
-    else{
-        std::cout << "incorrecta\n";
-        calif = 0;
+    else{//MULTIPLE Question
+        int user_ans;
+        do{//Display question and options (Answers)
+            std::cout << questions[no_que].question_text << '\n';
+            for( int i = 0; i < questions[no_que].answers.size(); i++)
+                std::cout << (i+1) << ".\t" << questions[no_que].answers[i].formula << '\n';
+            std::cin.clear();
+            std::getline(std::cin, buffer);
+            std::stringstream(buffer) >> user_ans;
+        }while(user_ans < 1 || user_ans > 4);
+        //Evaluate User Answer
+        //Get the percentage calification for the selected answer 
+        //and multiply by the default score in the current question
+        user_ans -= 1;
+        std::cout << "correcta\n" << "Retroalimentacion Especifica: " <<
+                    questions[no_que].answers[user_ans].specific_feedback << '\n';
+        calif = (float)(questions[no_que].answers[user_ans].calification)/100*(float)questions[no_que].default_score;
     }
-    std::cout << "La respuesta correcta es " << questions[no_que].answers[0].result << '\n';
+    //Final output for every type of question
     std::cout << "Retroalimentacion General: " << questions[no_que].general_feedback << '\n'
-              << "---------------------------------------------------\n\n";
+            << "---------------------------------------------------\n\n";
     std::cout << "Su puntuacion para esta pregunta es: " << calif << '\n';
     return calif;
 }
