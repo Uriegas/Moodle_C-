@@ -404,8 +404,10 @@ float Exam::apply_question(int& no_que){
     //Find according dataset for each wildcard and instantate them in order
     for(int i = 0; i < questions[no_que].wildcards.size(); i++)//Instantate variables
         for(int j = 0; j < datasets.size(); j++)
-            if(questions[no_que].wildcards[i] == datasets[j].wildcard)
+            if(questions[no_que].wildcards[i] == datasets[j].wildcard){
                 inst_wild.push_back(datasets[j].get_random_number());
+                break;//Once you find the dataset stop searching for this wildcard
+            }
 
     //Configure the current question
     questions[no_que].apply(inst_wild);
