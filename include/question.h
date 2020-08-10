@@ -78,7 +78,7 @@ public:
     void set_landmarks();
     //Created/Modified
     void time();
-    void apply(std::vector<Dataset>& datasets);
+    void apply(std::vector<std::string> inst_wildcards);
     //Public to print it
     std::string question_name;
     std::string created;

@@ -216,33 +216,46 @@ void vector_to_question(std::vector<std::string>& arr, Question& question){
     question.last_modified = arr[20];
     question.wildcards = string_variable_analizer(question.question_text);
 }
-void Question::apply(std::vector<Dataset>& datasets){
-    std::string buf;
-    float user_answer;
-    std::vector<std::string> wildcards_instantiated;
-    //1.    Fetch dataset
-    //2,    Instantiate wildcards
-    //3.    Set cout and cin options (User interface)
-    //4.    Evaluate input considering configuration
-
-    if(wildcards.empty())
-        std::cout << "Empty bro\n";
-    else{
-        std::cout << "It is not empty";
-    for(int i = 0; i < wildcards.size(); i++){//Instantiate each wildcard
-        for(int j = 0; j < datasets.size(); j++){//Find wildcard dataset
-            if (wildcards[i] == datasets[i].get_wildcard()){//If founded the current wildcard dataset
-                wildcards_instantiated[i] = datasets[i].get_random_number();
-            }
-            else
-                continue;
-        }
+//Configure the current
+void Question::apply(std::vector<std::string> inst_wild){
+    std::vector<std::string> formulas;
+    std::vector<std::string> formulas_to_replace;
+    std::vector<std::string> solved_formulas;
+    std::vector<float> result_of_formulas;
+    //Replace wildacards in question text and formula of answer by the instantiated ones
+    for(int i = 0; i < inst_wild.size(); i++){
+        ReplaceStringInPlace(question_text, '{'+wildcards[i]+'}', inst_wild[i]);
+        ReplaceStringInPlace(answers[0].formula, '{'+wildcards[i]+'}', inst_wild[i]);
     }
 
-    for(int i = 0; i < wildcards_instantiated.size(); i++)
-        ReplaceStringInPlace(question_text, '{' + wildcards[i] + '}', wildcards_instantiated[i]);
-    std::cout << question_text;
+    //Get string formula for specific and general feedback
+    //Saved in vector, IMPORTANT we know that the first two positions are fixed but clues not
+    formulas.push_back(find_formula_in_string(general_feedback));
+    for(int i = 0; i < answers.size(); i++)//Iterate over answers feedback to find the formulas in answeer
+        formulas.push_back(find_formula_in_string(answers[i].specific_feedback));
+    formulas_to_replace = formulas;
+    /*//Dont implemnt clues 
+    for(int i = 0; i < questions[no_que].clues.size(); i++)
+        formulas.push_back(find_formula_in_string(questions[no_que].clues[i]));
+    */
+    //Now replace variables in formulas by a random number saved in instant_wildcards
+    for(int i = 0; i < formulas.size(); i++)//Iterate over each formula
+        for(int j = 0; j < wildcards.size(); j++)//Iterate over each wildcard
+            ReplaceStringInPlace(formulas[i], '{' + wildcards[j] + '}', inst_wild[j]);
+
+    //Instantiate all the formulas and save to another verctor
+    for(int i = 0; i < formulas.size(); i++){
+        result_of_formulas.push_back(answers[0].string_to_formula(formulas[i]));
+//        result_of_formulas.push_back( evaluate(parser(lexer(formulas[i]).vector), 0, 1000) );
     }
+    //Replace the result in every string that is going to be shown to the user
+    ReplaceStringInPlace(general_feedback, '[' + formulas_to_replace[0] + ']', std::to_string(result_of_formulas[0]));
+    ReplaceStringInPlace(answers[0].specific_feedback, '[' + formulas_to_replace[1] + ']', std::to_string(result_of_formulas[1]));
+
+    //Convert the string formula in the answer into a result instantiaded by the wildcards
+    for(int j = 0; j < wildcards.size(); j++)//Iterate over each wildcard
+        ReplaceStringInPlace(answers[0].formula, '{' + wildcards[j] + '}', inst_wild[j]);
+    answers[0].result = answers[0].string_to_formula(answers[0].formula);
 }
 
 //************************************************PRINT FUNCTIONS************************************************

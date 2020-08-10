@@ -31,13 +31,14 @@ agr:std::cout << "Opciones:" << "\n"
             << "0." << "\t" << "Salir de MOODLE" << "\n"
             << "1." << "\t" << "Agregar pregunta" << "\n"
             << "2." << "\t" << "Subir pregunta desde archivo" << "\n"
-            << "3." << "\t" << "Previsualizar pregunta" << "\n"
-            << "4." << "\t" << "Aplicar examen" << "\n"
-            << "5." << "\t" << "Visualizar configuracion actual" << "\n";
+            << "3." << "\t" << "Subir conjunto de datos desde archivo" << "\n"
+            << "4." << "\t" << "Previsualizar pregunta" << "\n"
+            << "5." << "\t" << "Aplicar examen" << "\n"
+            << "6." << "\t" << "Visualizar configuracion actual" << "\n";
     std::cin.clear();
     std::getline(std::cin, buffer);
     std::stringstream(buffer) >> agregar_editar;
-    if(agregar_editar < 0 || agregar_editar > 5){
+    if(agregar_editar < 0 || agregar_editar > 6){
         std::cout << "ERROR: Ingrese un valor valido" << std::endl;
         goto agr;
     }
@@ -271,16 +272,20 @@ void Exam::apply_exam(){
     if(questions.empty())
         std::cout << "Error: No hay preguntas cargadas en el examen";
     else{
-        for(int i = 0; i < questions.size(); i++){
-            //calification += questions[i].apply_question();
-        }
-        calification/questions.size();
+        //Get the total points of the exam
+        float max_score = 0;
+        for(int i = 0; i < questions.size(); i++)
+            max_score += questions[i].default_score;
+        for(int i = 0; i < questions.size(); i++)
+            calification += apply_question(i);
+        std::cout << "Su puntuacion final en este examen es de " << (calification/max_score)*100
+                  << "\n------------------------------------------------------\n\n";
     }
 }
 //Reads current question config and performs an operation
 //Returns de result of the operation
 //no_que = number of question
-void Exam::apply_question(int& no_que){
+float Exam::apply_question(int& no_que){
     //This function dependes on datasets
     //There are 3 types of applications
     //1.    Fetch dataset
@@ -296,13 +301,14 @@ void Exam::apply_question(int& no_que){
     std::vector<float> result_of_formulas;
 
     srand(time(NULL));
-    std::cout << "Previsualizando pregunta no. " << no_que+1 << '\n';
     //Find according dataset for each wildcard and instantate them in order
     for(int i = 0; i < questions[no_que].wildcards.size(); i++)//Instantate variables
         for(int j = 0; j < datasets.size(); j++)
             if(questions[no_que].wildcards[i] == datasets[j].wildcard)
                 inst_wild.push_back(datasets[j].get_random_number());
-
+    //Configure the current question
+    questions[no_que].apply(inst_wild);
+/*
     //Replace wildacards in question text and formula of answer by the instantiated ones
     for(int i = 0; i < inst_wild.size(); i++){
         ReplaceStringInPlace(questions[no_que].question_text, '{'+questions[no_que].wildcards[i]+'}', inst_wild[i]);
@@ -315,10 +321,9 @@ void Exam::apply_question(int& no_que){
     for(int i = 0; i < questions[no_que].answers.size(); i++)//Iterate over answers feedback to find the formulas in answeer
         formulas.push_back(find_formula_in_string(questions[no_que].answers[i].specific_feedback));
     formulas_to_replace = formulas;
-    /*//Dont implemnt clues 
-    for(int i = 0; i < questions[no_que].clues.size(); i++)
-        formulas.push_back(find_formula_in_string(questions[no_que].clues[i]));
-    */
+    //Dont implemnt clues 
+    //for(int i = 0; i < questions[no_que].clues.size(); i++)
+    //    formulas.push_back(find_formula_in_string(questions[no_que].clues[i]));
     //Now replace variables in formulas by a random number saved in instant_wildcards
     for(int i = 0; i < formulas.size(); i++)//Iterate over each formula
         for(int j = 0; j < questions[no_que].wildcards.size(); j++)//Iterate over each wildcard
@@ -337,18 +342,32 @@ void Exam::apply_question(int& no_que){
     for(int j = 0; j < questions[no_que].wildcards.size(); j++)//Iterate over each wildcard
         ReplaceStringInPlace(questions[no_que].answers[0].formula, '{' + questions[no_que].wildcards[j] + '}', inst_wild[j]);
     questions[no_que].answers[0].result = questions[no_que].answers[0].string_to_formula(questions[no_que].answers[0].formula);
-
+*/
+    //Evaluate question already instantiated
     std::string buffer;
     float user_ans;
+    float calif;
     std::cout << questions[no_que].question_text << '\n';
     std::cin.clear();
     std::getline(std::cin, buffer);
     std::stringstream(buffer) >> user_ans;
-    std::cout << "Su respuesta fue: " << user_ans << '\n';
-    std::cout << "La respuesta es " << (answer_correctness(user_ans, questions[no_que].answers[0].tolerance, 
-                 questions[no_que].answers[0].tolerance_type) == 1 ? "correcta" : "incorrecta") << '\n';
-    std::cout << questions[no_que].answers[0].result << '\n';
-    std::cout << "Retroalimentacion General: " << questions[no_que].general_feedback << '\n';
-    std::cout << "Retroalimentacion Especifica: " << questions[no_que].answers[0].specific_feedback << '\n';
+    std::cout << "Su respuesta fue " << user_ans << '\n'
+                << "La respuesta es ";
+    //Evaluate if the answer is correct
+    if(answer_correctness(user_ans, questions[no_que].answers[0].tolerance, 
+                 questions[no_que].answers[0].tolerance_type) == 1){
+                std::cout << "correcta\n" << "Retroalimentacion Especifica: " <<
+                questions[no_que].answers[0].specific_feedback << '\n';
+                calif = (float)(questions[no_que].answers[0].calification)/100*(float)questions[no_que].default_score;
+    }
+    else{
+        std::cout << "incorrecta\n";
+        calif = 0;
+    }
+    std::cout << "La respuesta correcta es " << questions[no_que].answers[0].result << '\n';
+    std::cout << "Retroalimentacion General: " << questions[no_que].general_feedback << '\n'
+              << "---------------------------------------------------\n\n";
+    std::cout << "Su puntuacion para esta pregunta es: " << calif << '\n';
+    return calif;
 }
 //Modularize apply question function

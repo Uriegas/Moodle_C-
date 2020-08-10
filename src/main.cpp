@@ -27,6 +27,14 @@ int main() {
             exam.load_question(file);
             break;
         }
+        case LOAD_DATASET:{
+            std::string&& file = " ";
+            std::cout << "Ingrese el nombre del archivo\n";
+            std::cin.clear();
+            std::getline(std::cin, file);
+            exam.load_dataset(file);
+            break;
+        }
         case PREVIEW_QUESTION:{
             exam.print_question_list();
             std::string&& buf = " ";
@@ -36,6 +44,7 @@ int main() {
             std::getline(std::cin, buf);
             std::stringstream(buf) >> preview_question;
             if( !(preview_question > exam.questions.size() || preview_question < 1) ){
+                std::cout << "Previsualizando pregunta no. " << preview_question+1 << '\n';
                 preview_question -= 1;
                 exam.apply_question(preview_question);
             }
@@ -44,8 +53,7 @@ int main() {
             break;
         }
         case APPLY_EXAM:{
-            std::string&& file = "datasets.txt";
-            exam.load_dataset(file);
+            exam.apply_exam();
             break;
         }
         case CURRENT_CONFIG:

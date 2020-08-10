@@ -8,15 +8,15 @@
 #include <iostream>
 #include <sstream>
 
-enum SELECT_OPTION { GET_OUT, CREATE_QUESTION, LOAD_QUESTION, PREVIEW_QUESTION, APPLY_EXAM, CURRENT_CONFIG };
+enum SELECT_OPTION { GET_OUT, CREATE_QUESTION, LOAD_QUESTION, LOAD_DATASET, PREVIEW_QUESTION, APPLY_EXAM, CURRENT_CONFIG };
 //Each time that we find a new wildcard in a question we create a new dataset
 class Exam {
     public:
-        Exam(){};
+        Exam():calification(0){};
         int show_exam();
         Question create_new_question();
 //        void modify_question(const int& selected_question);//Return exit or failure
-        void apply_question(int& no_que);
+        float apply_question(int& no_que);
         void add_dataset(Dataset& dataset);
         void load_question(std::string file);
         void load_dataset(std::string& file);
