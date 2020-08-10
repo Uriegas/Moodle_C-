@@ -31,10 +31,12 @@ float Answer::string_to_formula(std::string formula){
 
 }
 void Answer::set_tolerance(){
+    std::string buf;
     size_t tole = 0;
     float type;
 
-    std::cin >> tole;
+    std::getline(std::cin, buf);
+    std::stringstream(buf) >> tole;
     while(tole <= 0 || tole > 3){
         std::cout << "Ingrese un valor valido \n";
         std::cin >> tole;
@@ -51,12 +53,13 @@ void Answer::set_tolerance(){
 
 void Answer::set_decimal(){
     int decimal;
-    std::string choose;
+    std::string buf;
+    int choose;
 ag: std::cout << "Ingrese la cantidad de decimales o cifras significativas a mostrar" << "\n";
     std::cin.clear();
-    std::cin.ignore(1, '\n');
-    std::cin >> decimal;
-    std::cout << decimal;
+    std::getline(std::cin, buf);
+    std::stringstream(buf) >> decimal;
+    std::cout << "Usted ingreso " << decimal << '\n';
     if(decimal < 0){
         std::cout << "Ingrese un valor valido" << "\n";
         goto ag;
@@ -66,11 +69,12 @@ ag: std::cout << "Ingrese la cantidad de decimales o cifras significativas a mos
 dec:std::cout << "Decimales o cifras significativas?" << "\n";
     std::cout << "0." << "\t" << "Decimal" << "\n"
             << ">1." << "\t" << "Cifras Significativas" << std::endl;
-    std::cin.ignore();
-    std::getline(std::cin, choose);
-    if(choose == "0")
+    std::cin.clear();
+    std::getline(std::cin, buf);
+    std::stringstream(buf) >> choose;
+    if(choose == 0)
         tolerance_type = DECIMAL;
-    else if(choose == "1")
+    else if(choose == 1)
         tolerance_type = SIGNIFICATIVE;
     else{
         std::cout << "Ingrese un valor valido" << "\n";
@@ -80,6 +84,17 @@ dec:std::cout << "Decimales o cifras significativas?" << "\n";
 
 void Answer::set_specific_feedback(){
     specific_feedback = feedback_function("retroalimentacion especifica");
+}
+
+void Answer::set_calification(){
+    std::string buf;
+    do{
+    std::cout << "Ingrese la calificacion que tendra el ingresar esta respuesta\n"
+              << "Ingrese un valor entre 0 y 100\n";
+    std::cin.clear();
+    std::getline(std::cin, buf);
+    std::stringstream(buf) >> calification;
+    }while( (calification < 0) || (calification > 100) );
 }
 
 //Question Class

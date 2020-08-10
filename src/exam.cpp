@@ -52,6 +52,7 @@ Question Exam::create_new_question(){
     //Instatiate classes about the question elemnts
     int score;
     int selected_question;
+    std::string buff;
 que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
             << "1." << "\t" << "Calculada Simple" << "\n"
             << "2." << "\t" << "Calculada Normal" << "\n"
@@ -81,30 +82,50 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
 
         //<<<<<<<<<< Answer Section >>>>>>>>>>>>>>>
         Answer answer;
-        if(selected_question == SIMPLE){
+        if(selected_question == SIMPLE || selected_question == CALCULATED){
             std::string another_question = "y";
             while(another_question == "y" || another_question == "1"){
                 //Read answer input
-                //read_formula returns a postfix notation queue tokenized
+                //Evaluate if the string is in correct notation
                 std::cin.clear();
-                std::cin.ignore();
                 answer.read_formula();
-                if(selected_question != MULTIPLE){
-                    std::cout << "Ingrese el tipo de tolerancia y despues el valor de la tolerancia" << "\n"
-                                << "Tipos de tolerancia:" << "\n"
-                                << "1." << "\t" << "Relativa" << "\n"
-                                << "2." << "\t" << "Nominal" << "\n"
-                                << "3." << "\t" << "Geometrica" << "\n";
-                    answer.set_tolerance();
-                }
+                question.wildcards = string_variable_analizer(answer.formula);//Find wildcards in formula
+                answer.set_calification();
+                std::cout << "Ingrese el tipo de tolerancia y despues el valor de la tolerancia" << "\n"
+                            << "Tipos de tolerancia:" << "\n"
+                            << "1." << "\t" << "Relativa" << "\n"
+                            << "2." << "\t" << "Nominal" << "\n"
+                            << "3." << "\t" << "Geometrica" << "\n";
+                answer.set_tolerance();
                 answer.set_decimal();
                 answer.set_specific_feedback();
+                //Add answer to the question settings
                 question.set_answer(answer);
-                std::cout << "Desea agregar otra pregunta?\n"
+                std::cout << "Desea agregar otra respuesta?\n"
                             <<"y = si\to\t1 = si\n"
                             <<"n = no\to\t0 = no\n";
                 std::cin >> another_question;
             }
+        }
+        else{//MULTIPLE Question, By default 4 answers
+            int pregunta = 1;
+            std::cout << "Configuracion de preguntas para pregunta calculada\n"
+                      << "Las preguntas calculadas tiene 4 opciones por defecto\n"
+                      << "-----------------------------------------------------\n";
+            while(pregunta <= 4){
+                std::cout << "Opcion numero " << pregunta << '\n';
+                //Read answer input
+                //Evaluate if the string is in correct notation
+                std::cin.clear();
+                answer.read_formula();
+                question.wildcards = string_variable_analizer(answer.formula);//Find wildcards in formula
+                answer.set_decimal();
+                answer.set_specific_feedback();
+                //Add answer to the question settings
+                question.set_answer(answer);
+                pregunta++;
+            }
+        }
             //<<<<<<<<<< Unit Section >>>>>>>>>>>>>>>
             question.set_units();
             //<<<<<<<<<< Multiple Attempts Section >>>>>>>>>>>>>>>
@@ -112,17 +133,78 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
 
             //<<<<<<<<<< Landmark Section >>>>>>>>>>>>>>>
             std::cin.clear();
-            std::cin.ignore();
             question.set_landmarks();
-
+            
+            //<<<<<<<<<< Dataset Section >>>>>>>>>>>>>>>
+            //Only for Multiple and Calculated
+            if(selected_question == MULTIPLE || selected_question == CALCULATED){
+                score = 0; //reuse this var;
+                while( (score < 1) || (score > 2) ){
+                std::cout << "Desea configurar el conjunto de datos o que moodle lo genere?\n"
+                        << "1.\tGenerado por moodle\n"
+                        << "2.\tAgregar items manualmente\n";
+                std::cin.clear();
+                std::getline(std::cin, buff);
+                std::stringstream(buff) >> score;
+                std::cout << buff << '\n' << score << '\n';
+                }
+                if(score == 1){//Generate dataset automaticly
+                    int min, max;
+                    for(int i = 0; i < question.wildcards.size(); i++){
+                        std::cout << "Conjunto de datos para el comodin: " << question.wildcards[i]
+                                << "\nIngrese el rango de los numeros a generar\n"
+                                << "Minimo>";
+                        std::cin.clear();
+                        std::getline(std::cin, buff);
+                        std::stringstream(buff) >> min;
+                        std::cout << "\nMaximo>";
+                        std::cin.clear();
+                        std::getline(std::cin, buff);
+                        std::stringstream(buff) >> max;
+                        create_dataset(question.wildcards[i], min, max);
+                    }
+                }
+                else{//Add items to the dataset
+                    for(int i = 0; i < question.wildcards.size(); i++){
+                        Dataset dataset;
+                        int item;
+                        std::cout << "Conjunto de datos para el comodin: " << question.wildcards[i];
+                        for(int j = 0; j <= MAX_SET_SIZE; j++){
+                            std::cout << "Ingrese un numero para agregar al conjunto de datos\n";
+                            std::cin.clear();
+                            std::getline(std::cin, buff);
+                            std::stringstream(buff) >> item;
+                            dataset.add_number(std::to_string(item));
+                        }
+                        if(dataset.dataset_size() < MAX_SET_SIZE){
+                            dataset.moodle_set_generation(0, 100);//Generate the rest of the data
+                        }
+                        datasets.push_back(dataset);
+                    }
+                }
+            }
+            else{//SIMPLE Question
+                int min, max;
+                for(int i = 0; i < question.wildcards.size(); i++){
+                    std::cout << "Conjunto de datos para el comodin: " << question.wildcards[i]
+                            << "\nIngrese el rango de los numeros a generar\n"
+                            << "Minimo>";
+                    std::cin.clear();
+                    std::getline(std::cin, buff);
+                    std::stringstream(buff) >> min;
+                    std::cout << "\nMaximo>";
+                    std::cin.clear();
+                    std::getline(std::cin, buff);
+                    std::stringstream(buff) >> max;
+                    create_dataset(question.wildcards[i], min, max);
+                }
+            }
             //<<<<<<<<<< Created/Last Change Section >>>>>>>>>>>>>>>
+            //Get current time
             question.time();
             std::cout << "Pregunta creada en " << question.created << "\n"
                     << "Pregunta modifica en " << question.last_modified << "\n";
-        }
-        else if(selected_question == CALCULATED){}
-        else{//Multiple Question -No need to prove it
-        }
+        std::cout << question;
         return question;
     }
 }
@@ -147,12 +229,6 @@ void Exam::load_question(std::string file){
         myfile.close();
         //Save to struct
         vector_to_question(arr, question);
-        /*
-        me.myname = arr[0];
-        std::stringstream(arr[1]) >> me.myage;
-        me.state = arr[2];
-        std::stringstream(arr[3]) >> me.avg;
-        */
         //Print temporary array
         for(int i = 0; i < arr.size(); i++)
             std::cout << arr[i] << '\n';
@@ -230,6 +306,7 @@ void Exam::load_dataset(std::string& file){
                 datasets.push_back(dataset);
                 data.clear();
                 arr.clear();
+                dataset.datasets.clear();
                 numbers.clear();
                 counter = 0;
                 continue;
@@ -287,7 +364,6 @@ void Exam::apply_exam(){
 //no_que = number of question
 float Exam::apply_question(int& no_que){
     //This function dependes on datasets
-    //There are 3 types of applications
     //1.    Fetch dataset
     //2,    Instantiate wildcards
     //3.    Set cout and cin options (User interface)
@@ -306,43 +382,10 @@ float Exam::apply_question(int& no_que){
         for(int j = 0; j < datasets.size(); j++)
             if(questions[no_que].wildcards[i] == datasets[j].wildcard)
                 inst_wild.push_back(datasets[j].get_random_number());
+
     //Configure the current question
     questions[no_que].apply(inst_wild);
-/*
-    //Replace wildacards in question text and formula of answer by the instantiated ones
-    for(int i = 0; i < inst_wild.size(); i++){
-        ReplaceStringInPlace(questions[no_que].question_text, '{'+questions[no_que].wildcards[i]+'}', inst_wild[i]);
-        ReplaceStringInPlace(questions[no_que].answers[0].formula, '{'+questions[no_que].wildcards[i]+'}', inst_wild[i]);
-    }
 
-    //Get string formula for specific and general feedback
-    //Saved in vector, IMPORTANT we know that the first two positions are fixed but clues not
-    formulas.push_back(find_formula_in_string(questions[no_que].general_feedback));
-    for(int i = 0; i < questions[no_que].answers.size(); i++)//Iterate over answers feedback to find the formulas in answeer
-        formulas.push_back(find_formula_in_string(questions[no_que].answers[i].specific_feedback));
-    formulas_to_replace = formulas;
-    //Dont implemnt clues 
-    //for(int i = 0; i < questions[no_que].clues.size(); i++)
-    //    formulas.push_back(find_formula_in_string(questions[no_que].clues[i]));
-    //Now replace variables in formulas by a random number saved in instant_wildcards
-    for(int i = 0; i < formulas.size(); i++)//Iterate over each formula
-        for(int j = 0; j < questions[no_que].wildcards.size(); j++)//Iterate over each wildcard
-            ReplaceStringInPlace(formulas[i], '{' + questions[no_que].wildcards[j] + '}', inst_wild[j]);
-
-    //Instantiate all the formulas and save to another verctor
-    for(int i = 0; i < formulas.size(); i++){
-        result_of_formulas.push_back(questions[no_que].answers[0].string_to_formula(formulas[i]));
-//        result_of_formulas.push_back( evaluate(parser(lexer(formulas[i]).vector), 0, 1000) );
-    }
-    //Replace the result in every string that is going to be shown to the user
-    ReplaceStringInPlace(questions[no_que].general_feedback, '[' + formulas_to_replace[0] + ']', std::to_string(result_of_formulas[0]));
-    ReplaceStringInPlace(questions[no_que].answers[0].specific_feedback, '[' + formulas_to_replace[1] + ']', std::to_string(result_of_formulas[1]));
-
-    //Convert the string formula in the answer into a result instantiaded by the wildcards
-    for(int j = 0; j < questions[no_que].wildcards.size(); j++)//Iterate over each wildcard
-        ReplaceStringInPlace(questions[no_que].answers[0].formula, '{' + questions[no_que].wildcards[j] + '}', inst_wild[j]);
-    questions[no_que].answers[0].result = questions[no_que].answers[0].string_to_formula(questions[no_que].answers[0].formula);
-*/
     //Evaluate question already instantiated
     std::string buffer;
     float user_ans;
@@ -371,3 +414,18 @@ float Exam::apply_question(int& no_que){
     return calif;
 }
 //Modularize apply question function
+
+//Creates a dataset and push it to the datasets vector
+void Exam::create_dataset(std::string wildcard, int min, int max ){
+    Dataset dataset;
+    dataset.wildcard = wildcard;
+    dataset.moodle_set_generation(min, max);
+    dataset.syncronization = OFF;
+    dataset.type = PRIVATE;
+    datasets.push_back(dataset);
+}
+
+void Exam::print_datasets(){
+    for(int i = 0; i < datasets.size(); i++)
+        datasets[i].print_dataset();
+}

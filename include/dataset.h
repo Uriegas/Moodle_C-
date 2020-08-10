@@ -22,6 +22,7 @@ struct Dataset{
     void add_number(const std::string& add);//Push an item to the data_set
     void print_dataset();
     void vector_to_dataset(std::vector<std::string>& data, Dataset& dataset);
+    void moodle_set_generation(int min, int max);
     std::string get_wildcard();
 
     std::string wildcard;

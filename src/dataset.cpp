@@ -16,19 +16,21 @@ void Dataset::add_number(const std::string& add){
 }
 
 void Dataset::print_dataset(){
-    std::cout << "Comodin:\t" << wildcard << '\n'
+    std::cout << "\nComodin:\t" << wildcard << '\n'
         << "Tipo:\t" << type << '\n'
         << "Sincronizacion:\t" << syncronization << '\n';
     std::cout << datasets.size() << '\n';
     for(int i = 1; i <= datasets.size(); i++){
         std::cout << datasets[i-1] << '\t';
-        if( (i%10) == 0 )
+        if( ((i%10) == 0) && (i <= MAX_SET_SIZE) )
             std::cout << '\n';
+        if( i > MAX_SET_SIZE )
+            datasets[i-1].clear();
     }
 }
 
 void Dataset::vector_to_dataset(std::vector<std::string>& data, Dataset& dataset){
-    std::string number;
+    std::string number = "";
     std::stringstream(data[0]) >> dataset.wildcard;
     std::stringstream(data[1]) >> dataset.type;
     std::stringstream(data[2]) >> dataset.syncronization;
@@ -42,6 +44,12 @@ void Dataset::vector_to_dataset(std::vector<std::string>& data, Dataset& dataset
 
 std::string Dataset::get_wildcard(){
     return wildcard;
+}
+
+//for use this function you need to seed the random generator
+void Dataset::moodle_set_generation(int min, int max){
+    while(datasets.size() <= MAX_SET_SIZE)
+        datasets.push_back(std::to_string(min + rand() % ((max+1) - min)));
 }
 /*
 std::ostream& operator<<(std::ostream& out, const Dataset& dataset){

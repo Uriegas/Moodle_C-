@@ -116,7 +116,6 @@ ret:std::cout << "Desea agregar " << feedback_type << "\n"
     if((*retro) == 'y'){
         std::cout << "Ingrese la(s) " << feedback_type << "\n";
         std::cin.clear();
-        std::cin.ignore(10, '\n');
         std::getline(std::cin, feedback_return);
     }
     else if((*retro) == 'n'){

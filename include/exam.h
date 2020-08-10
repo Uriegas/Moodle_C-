@@ -15,13 +15,14 @@ class Exam {
         Exam():calification(0){};
         int show_exam();
         Question create_new_question();
-//        void modify_question(const int& selected_question);//Return exit or failure
+        void create_dataset(std::string wildcard, int min = 0, int max = 100);
         float apply_question(int& no_que);
         void add_dataset(Dataset& dataset);
         void load_question(std::string file);
         void load_dataset(std::string& file);
         void print_question_list();
         void apply_exam();
+        void print_datasets();
         std::vector<Question> questions;
     private:
         std::vector<Dataset> datasets;

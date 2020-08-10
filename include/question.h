@@ -25,6 +25,7 @@ struct Answer {
         void set_tolerance();
         void set_decimal();
         void set_specific_feedback();
+        void set_calification();
         float string_to_formula(std::string formula);
         float result;
         std::string formula;
