@@ -39,14 +39,17 @@ void Answer::set_tolerance(){
     std::stringstream(buf) >> tole;
     while(tole <= 0 || tole > 3){
         std::cout << "Ingrese un valor valido \n";
-        std::cin >> tole;
+        std::getline(std::cin, buf);
+        std::stringstream(buf) >> tole;
     }
 
-    std::cin >> type;
+    std::getline(std::cin, buf);
+    std::stringstream(buf) >> type;
     while(type > 100 || type < 0){
         std::cout << "Ingrese un valor valido \n"
                   << "La tolerancia debe estar entre 0 a 100 \n";
-        std::cin >> type;
+        std::getline(std::cin, buf);
+        std::stringstream(buf) >> type;
     }
     tolerance = type;
 }
