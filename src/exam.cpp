@@ -109,6 +109,7 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
         }
         else{//MULTIPLE Question, By default 4 answers
             int pregunta = 1;
+            int counter = 0;//Counter for reading just the first wildcards
             std::cout << "Configuracion de preguntas para pregunta calculada\n"
                       << "Las preguntas calculadas tiene 4 opciones por defecto\n"
                       << "-----------------------------------------------------\n";
@@ -118,7 +119,11 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
                 //Evaluate if the string is in correct notation
                 std::cin.clear();
                 answer.read_formula();
-                question.wildcards = string_variable_analizer(answer.formula);//Find wildcards in formula
+                while(counter == 0){//Set wildcards for the first question, the one that is correct
+                    question.wildcards = string_variable_analizer(answer.formula);//Find wildcards in formula
+                    counter++;//Increment 1 and dont do it anymore
+                }
+                answer.set_calification();
                 answer.set_decimal();
                 answer.set_specific_feedback();
                 //Add answer to the question settings
