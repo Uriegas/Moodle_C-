@@ -280,7 +280,7 @@ void Question::apply(std::vector<std::string> inst_wild){
 //Print wildcards
 std::ostream& operator<<(std::ostream& out, const std::vector<std::string>& wildcards){
     for(int i = 0; i < wildcards.size(); i++)
-        out << wildcards[i];
+        out << wildcards[i] << ' ';
     return out;
 }
 
@@ -334,8 +334,8 @@ std::ostream& operator<<(std::ostream& out, Question& question){
         << question.attempt_penalization << '\n'
         << question.clues << '\n'//Overflow
         << question.landmarks << '\n'
-        << question.created << '\n'
-        << question.last_modified << '\n';
+        << question.created
+        << question.last_modified;
         //Ignored dataset and wildcards variables
     return out;
 }

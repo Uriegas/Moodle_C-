@@ -140,7 +140,7 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
             if(selected_question == MULTIPLE || selected_question == CALCULATED){
                 score = 0; //reuse this var;
                 while( (score < 1) || (score > 2) ){
-                std::cout << "Desea configurar el conjunto de datos o que moodle lo genere?\n"
+                std::cout << "\nDesea configurar el conjunto de datos o que moodle lo genere?\n"
                         << "1.\tGenerado por moodle\n"
                         << "2.\tAgregar items manualmente\n";
                 std::cin.clear();
@@ -199,11 +199,30 @@ que:std::cout << "Pueden ingresar 3 tipos de preguntas" << "\n"
                     create_dataset(question.wildcards[i], min, max);
                 }
             }
-            //<<<<<<<<<< Created/Last Change Section >>>>>>>>>>>>>>>
-            //Get current time
-            question.time();
-            std::cout << "Pregunta creada en " << question.created << "\n"
-                    << "Pregunta modifica en " << question.last_modified << "\n";
+        //<<<<<<<<<< Created/Last Change Section >>>>>>>>>>>>>>>
+        //Get current time
+        question.time();
+        std::cout << "Pregunta creada en " << question.created << "\n"
+                << "Pregunta modifica en " << question.last_modified << "\n";
+        do{
+        std::cout << "Desea guardar este pregunta en un .txt?\n"
+                    << "1.\tSi\n2.\tNo\n";
+        std::cin.clear();
+        std::getline(std::cin, buff);
+        std::stringstream(buff) >> selected_question;//Reuse this int
+        std::cout << selected_question;
+        }while( (selected_question < 1) || (selected_question > 2) );
+
+        if(selected_question == 1){
+            std::string quest;
+            std::cout << "\nIngrese el nombre del .txt\n"
+                        << "(No ingrese la terminacion .txt)\n";
+            std::cin.clear();
+            std::getline(std::cin, quest);
+            std::ofstream Questions(quest+".txt", std::ios_base::out | std::ios_base::app);
+            Questions << question;
+            Questions.close();
+        }
         std::cout << question;
         return question;
     }
