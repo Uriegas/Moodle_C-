@@ -183,14 +183,17 @@ std::vector<std::string> split_string( std::string str, const char dl){
     return substr_list; 
 }
 
+//Find formula surrounded by []
 //Returns a formula string
 //Note: Does not support error handling
 std::string find_formula_in_string(std::string str){
     std::string formula;
     bool formula_flag = false;
+    int founded = 0;
     for(int i = 0; i < str.size(); i++){
         if(str[i] == '['){//we are in the string
             formula_flag = true;
+            founded++;
             continue;
         }
         else if( (formula_flag == true) && (str[i] != ']') ){
@@ -204,5 +207,8 @@ std::string find_formula_in_string(std::string str){
         else
             continue;
     }
-    return formula;
+    if(founded == 0)
+        return "\n";
+    else
+        return formula;
 }

@@ -395,10 +395,6 @@ float Exam::apply_question(int& no_que){
     
     //only simple question supported yet
     std::vector<std::string> inst_wild;
-    std::vector<std::string> formulas;
-    std::vector<std::string> formulas_to_replace;
-    std::vector<std::string> solved_formulas;
-    std::vector<float> result_of_formulas;
 
     srand(time(NULL));
     //Find according dataset for each wildcard and instantate them in order
@@ -442,7 +438,7 @@ float Exam::apply_question(int& no_que){
         do{//Display question and options (Answers)
             std::cout << questions[no_que].question_text << '\n';
             for( int i = 0; i < questions[no_que].answers.size(); i++)
-                std::cout << (i+1) << ".\t" << questions[no_que].answers[i].formula << '\n';
+                std::cout << (i+1) << ".\t" << questions[no_que].answers[i].result << '\n';
             std::cin.clear();
             std::getline(std::cin, buffer);
             std::stringstream(buffer) >> user_ans;
@@ -451,9 +447,13 @@ float Exam::apply_question(int& no_que){
         //Get the percentage calification for the selected answer 
         //and multiply by the default score in the current question
         user_ans -= 1;
-        std::cout << "correcta\n" << "Retroalimentacion Especifica: " <<
+        std::cout << "Retroalimentacion Especifica: " <<
                     questions[no_que].answers[user_ans].specific_feedback << '\n';
         calif = (float)(questions[no_que].answers[user_ans].calification)/100*(float)questions[no_que].default_score;
+    }
+    for(int i = 0; i < questions[no_que].answers.size(); i++){
+        if(questions[no_que].answers[i].calification == 100)
+            std::cout << "La respuesta correcta es: " << questions[no_que].answers[i].result << '\n';
     }
     //Final output for every type of question
     std::cout << "Retroalimentacion General: " << questions[no_que].general_feedback << '\n'
