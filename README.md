@@ -1,6 +1,7 @@
 # Moodle Replica
 
-This is a simple moodle replica written in C++ using the ANSI C library and other self created functions.   
+## PROGRAM DESCRIPTION
+This is a simple moodle replica written in C++ using the standar C++ library and other self created functions.   
 
 In brief the user can create calculated questions for an end-user, mostly an student, this calculated questions have some settings like error tolerance, range of possible answer, etcetera.    
 
@@ -20,22 +21,22 @@ The values a, b, c have a range which is going to be set by the user and an erro
 Then the range could be between 1 and 100; which tells the program that the possible values of a, b and c are going to be in this range, and by the formula this is going to evaluate to the result of x that the student should answer, but if he or she fails and the answer is between the error tolerance then the answer would be correct.  
 
 ## BUILDING
-Build from source using cmake.  
-It is required cmake, make and gnu gcc.  
+Build from working folder using cmake.  
+For building you need cmake, make and gcc compiler.  
 
-Install as follows:  
+Install as follows:
 1. **mkdir build**
 2. **cd build**
 3. **cmake ..**
 
-These is going to create an executable in the build directory.  
+These is going to create an executable in build directory.  
 This has only been proven in Ubuntu 18.04.4.  
 Please do a little research on installing CMake projects before installing in another operating system.  
 
 ## TODO
-1. Implement the formula input function on the Input class
-2. Implement the 3 question functions
-3. Implement the examen generator
+1. Support multiple attempts of each question
+2. Modularize the code in ```Question::apply()``` function
+3. Support no formulas in question and answers feedbacks
 
 ## NOTES
 testing.sh is file in the main directory that is going to build from source and open the executable automatically. It only works on Linux.  
@@ -49,21 +50,6 @@ There are 3 types of questions:
 2. Normal Calculated Question
 3. Multiple Calculated Question
 
-For a better performance the questions can be subdivided with 3 functions:  
-1. `question_edit()`
-2. `dataset_properties()`
-3. `dataset_editing()`
-
-This is the main format for every calculated question eachone with their specific specs.  
-
-### Dataset
-For storing the datasets configuration we only use the following container:   
-```c++
-    template <class T, class Compare = less<T>, class Alloc = allocator<T>>
-    class set;
-```
-defined in the std namespace from the STL library.  
-
 ### Randomness
 For generating random numbers we use a simple density probabilty function.  
 1. Uniform. It means that every item has the same probability of ocurrance.
@@ -72,3 +58,11 @@ For generating random numbers we use a simple density probabilty function.
 ### Save Configuration
 After creating the exam is necessary to store the configuration to a file, so that it can be used by other program that read it and applies the exam to the student.    
 For this another program should be created or at least implement such a program in the current one.
+
+### Libraries
+Using the parser and lexer in the following [repository](https://github.com/Uriegas/Lexer-Parser-in-Cpp).  
+
+## TESTING   
+Copy the files in the docs directory to the build directory after [building](###BUILDING) the project.  
+In Linux is as follows, from the working directory:
+1. **[ cp docs/*.txt build/ ]**

@@ -1,0 +1,21 @@
+1
+Pregunta de Repaso
+Calcula el valor de {a}+{b} al {c}
+1
+La respuesta correcta es [pow({a}+{b}, {c})]
+pow({a}+{b}, {c})
+80
+1
+1
+2
+1
+Muy bien hecho, sobre todo porque si es [pow({a}+{b}, {c})]
+0
+0
+No hay
+0
+0
+La respuesta es una operacion binaria
+Programmer ITI Developer Moodle
+Pregunta creada el 10 de agosto de 2020
+Pregunta modificada el 10 de agosto de 2020
