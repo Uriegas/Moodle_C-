@@ -2,6 +2,7 @@
 
 ## PROGRAM DESCRIPTION
 This is a simple moodle replica written in C++ using the standar C++ library and other self created functions.   
+This is the current [repository](https://github.com/Uriegas/Moodle_C-) for this project.
 
 In brief the user can create calculated questions for an end-user, mostly an student, this calculated questions have some settings like error tolerance, range of possible answer, etcetera.    
 
@@ -42,6 +43,7 @@ Please do a little research on installing CMake projects before installing in an
 testing.sh is file in the main directory that is going to build from source and open the executable automatically. It only works on Linux.  
 Menu class should be called Exam, it is actually an object with teh characteistics of an exam.  
 This program make use of the lexer and parser functions in the following [repository](https://github.com/Uriegas/Lexer-Parser-in-Cpp) is better to prove the code before using the functions, it has not been fully tested yet.  
+This parser, lexer does not support negative numbers yet.
 
 ## FOR DEVELOPERS   
 ### Question Modularitation
